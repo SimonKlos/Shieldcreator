@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>shieldcreator — Versicherungsplattform für Influencer</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>🛡</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2314382E'/><path d='M16 5 L8 9 L8 18 C8 23 12 27 16 28 C20 27 24 23 24 18 L24 9 Z' fill='none' stroke='%2300C875' stroke-width='2' stroke-linejoin='round'/><polyline points='12,17 15,20 21,14' stroke='%2300C875' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: #080C14; overflow-x: hidden; font-family: 'DM Sans', sans-serif; color: #F1F5F9; }
+    body { background: #FAFAF7; overflow-x: hidden; font-family: 'Plus Jakarta Sans', sans-serif; color: #1A1A1A; }
     ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #080C14; }
-    ::-webkit-scrollbar-thumb { background: #1E2A3B; border-radius: 3px; }
-    button, input, select, textarea { font-family: 'DM Sans', sans-serif; }
+    ::-webkit-scrollbar-track { background: #FAFAF7; }
+    ::-webkit-scrollbar-thumb { background: #D0D0C8; border-radius: 3px; }
+    button, input, select, textarea { font-family: 'Plus Jakarta Sans', sans-serif; }
     input:focus, select:focus, textarea:focus { outline: none; }
 
     @keyframes fadeUp   { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
@@ -27,12 +27,11 @@
     @keyframes float    { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-10px); } }
     @keyframes glow     { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
     @keyframes shimmer  { from { background-position: -200% center; } to { background-position: 200% center; } }
-    @keyframes blobPulse{ 0%,100% { transform:scale(1) translate(0,0); } 50% { transform:scale(1.08) translate(2%,1%); } }
 
-    .nav-link:hover { color: #F1F5F9 !important; }
+    .nav-link:hover { color: #14382E !important; }
     .product-card:hover { transform: translateY(-6px) !important; }
-    .stat-item:hover .stat-value { color: #818CF8 !important; }
-    .trust-item:hover { border-color: #6366F133 !important; background: rgba(99,102,241,0.06) !important; }
+    .stat-item:hover .stat-value { color: #00C875 !important; }
+    .trust-item:hover { border-color: rgba(0,200,117,0.3) !important; background: #E8FAF0 !important; }
   </style>
 </head>
 <body>
@@ -50,48 +49,53 @@
     // ─────────────────────────────────────────────────────────
 
     const C = {
-      bg:          "#080C14",
-      bgAlt:       "#0D1220",
-      card:        "#101827",
-      cardHover:   "#141E2E",
-      border:      "#1E2A3B",
-      borderLight: "#263347",
-      accent:      "#6366F1",
-      accentLight: "#818CF8",
-      accentGlow:  "rgba(99,102,241,0.12)",
-      accentGlow2: "rgba(99,102,241,0.06)",
-      violet:      "#8B5CF6",
-      green:       "#10B981",
-      greenGlow:   "rgba(16,185,129,0.12)",
-      orange:      "#F59E0B",
-      orangeGlow:  "rgba(245,158,11,0.10)",
-      red:         "#EF4444",
-      text:        "#F1F5F9",
-      textMuted:   "#94A3B8",
-      textDim:     "#4E637A",
-      white:       "#FFFFFF",
-      gradient1:   "linear-gradient(135deg, #6366F1 0%, #8B5CF6 60%, #A78BFA 100%)",
-      gradient2:   "linear-gradient(135deg, #10B981 0%, #34D399 100%)",
-      gradient3:   "linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%)",
-      gradientText:"linear-gradient(135deg, #818CF8 0%, #A78BFA 50%, #C4B5FD 100%)",
+      forest:   "#14382E",
+      forest2:  "#1A4A3C",
+      mint:     "#00C875",
+      mintLt:   "#33D68E",
+      mintBg:   "#E8FAF0",
+      cream:    "#FAFAF7",
+      white:    "#FFFFFF",
+      ink:      "#1A1A1A",
+      ink2:     "#3A3A3A",
+      ink3:     "#6B6B6B",
+      ink4:     "#A0A0A0",
+      rule:     "#E5E5E0",
+      rule2:    "#D0D0C8",
+      amber:    "#D4950A",
+      amberBg:  "#FEF3C7",
+      red:      "#D03030",
+      redBg:    "#FEE2E2",
     };
+
+    function parseMarkdown(text) {
+      if (!text) return "";
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g, "<em>$1</em>")
+        .replace(/`(.*?)`/g, "<code style='background:#E8FAF0;padding:1px 4px;border-radius:3px;font-family:DM Mono,monospace;font-size:0.85em'>$1</code>")
+        .replace(/\n/g, "<br>");
+    }
 
     const INSURANCE_PRODUCTS = [
       {
         id: "campaign", name: "Campaign Protection", subtitle: "Kampagnen-Ausfall",
-        icon: "🛡️", color: C.accent, glow: C.accentGlow,
+        icon: "🛡️", color: "#14382E", glow: "rgba(20,56,46,0.1)",
         benefits: ["Absicherung bei Kampagnen-Stornierungen", "Automatische Schadenserfassung", "Auszahlung innerhalb 48h"],
         from: "14.90",
       },
       {
         id: "reach", name: "Reach Protection", subtitle: "Reichweiten-Ausfall",
-        icon: "📡", color: C.green, glow: C.greenGlow,
+        icon: "📡", color: "#00C875", glow: "rgba(0,200,117,0.12)",
         benefits: ["Schutz bei Algorithmus-Updates", "Parametrische Messung in Echtzeit", "Plattform-übergreifend"],
         from: "19.90",
       },
       {
         id: "content", name: "Content Liability+", subtitle: "Content-Risiko",
-        icon: "⚖️", color: C.orange, glow: C.orangeGlow,
+        icon: "⚖️", color: "#D4950A", glow: "rgba(212,149,10,0.12)",
         benefits: ["Markenrecht & Copyright-Schutz", "Rechtsbeistand inklusive", "EU-weit gültig"],
         from: "11.88",
       },
@@ -204,80 +208,65 @@
     function BgDecor() {
       return (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
-          {/* Grid */}
+          {/* Subtle grid on cream background */}
           <div style={{
             position: "absolute", inset: 0,
-            backgroundImage: `linear-gradient(${C.border}18 1px, transparent 1px), linear-gradient(90deg, ${C.border}18 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(${C.rule}88 1px, transparent 1px), linear-gradient(90deg, ${C.rule}88 1px, transparent 1px)`,
             backgroundSize: "64px 64px",
           }} />
-          {/* Blobs */}
-          <div style={{
-            position: "absolute", width: 700, height: 700, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 65%)",
-            top: "-15%", left: "15%", animation: "blobPulse 12s ease-in-out infinite",
-          }} />
-          <div style={{
-            position: "absolute", width: 500, height: 500, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 65%)",
-            top: "35%", right: "-8%", animation: "blobPulse 16s ease-in-out infinite 4s",
-          }} />
-          <div style={{
-            position: "absolute", width: 400, height: 400, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(16,185,129,0.05) 0%, transparent 65%)",
-            bottom: "5%", left: "-5%", animation: "blobPulse 14s ease-in-out infinite 2s",
-          }} />
-          {/* Noise */}
-          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.025 }}>
-            <filter id="noise">
-              <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-              <feColorMatrix type="saturate" values="0"/>
-            </filter>
-            <rect width="100%" height="100%" filter="url(#noise)"/>
-          </svg>
         </div>
       );
     }
 
     // ─── NAV ──────────────────────────────────────────────────
-    function LandingNav({ onStart }) {
+    function LandingNav({ onStart, step }) {
       const [scrolled, setScrolled] = useState(false);
       useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 30);
         window.addEventListener("scroll", handler);
         return () => window.removeEventListener("scroll", handler);
       }, []);
+      const logoOnDark = !scrolled && step === 0;
       return (
         <nav style={{
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-          background: scrolled ? `rgba(8,12,20,0.92)` : "transparent",
+          background: scrolled ? `rgba(255,255,255,0.95)` : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
-          borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent",
+          borderBottom: scrolled ? `1px solid ${C.rule}` : "1px solid transparent",
           padding: "0 2rem", height: 64,
           display: "flex", alignItems: "center", justifyContent: "space-between",
           transition: "background 0.4s, border-color 0.4s, backdrop-filter 0.4s",
         }}>
-          <div style={{ fontSize: "1.2rem", fontFamily: "'Syne', sans-serif", fontWeight: 800, letterSpacing: "-0.02em", cursor: "default" }}>
-            <span style={{ color: C.text }}>shield</span>
-            <span style={{ color: C.accentLight }}>creator</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", cursor: "default" }}>
+            <svg width={36} height={36} viewBox="0 0 52 52" fill="none">
+              <circle cx={26} cy={26} r={24} stroke={logoOnDark ? "#FFFFFF" : "#14382E"} strokeWidth={2.5} />
+              <circle cx={26} cy={26} r={24} stroke="#00C875" strokeWidth={2.5} strokeDasharray="45 107" strokeDashoffset={-14} />
+              <path d="M26 14 L18 18 L18 28 C18 33 22 37 26 38 C30 37 34 33 34 28 L34 18 Z" fill="none" stroke="#00C875" strokeWidth={2} strokeLinejoin="round" />
+              <polyline points="21,26 24,29 31,22" stroke="#00C875" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+            <span style={{ fontWeight: 800, letterSpacing: "-0.03em", fontSize: "1.25rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span style={{ color: logoOnDark ? "#FFFFFF" : "#14382E" }}>shield</span>
+              <span style={{ color: "#00C875" }}>creator</span>
+            </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
             {["Produkte", "Wie's funktioniert", "Preise"].map(link => (
               <a key={link} href={`#${link === "Produkte" ? "products" : link === "Wie's funktioniert" ? "how" : "pricing"}`}
                 className="nav-link"
-                style={{ color: C.textMuted, fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.85rem",
+                style={{ color: logoOnDark ? "rgba(255,255,255,0.75)" : C.ink3, fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.85rem",
                   textDecoration: "none", borderRadius: 8, transition: "color 0.2s" }}>
                 {link}
               </a>
             ))}
           </div>
           <button onClick={onStart} style={{
-            background: C.gradient1, color: C.white, border: "none", padding: "0.5rem 1.25rem",
+            background: C.forest, color: C.white, border: "none", padding: "0.5rem 1.25rem",
             borderRadius: 8, fontSize: "0.85rem", fontWeight: 600, cursor: "pointer",
-            boxShadow: "0 2px 12px rgba(99,102,241,0.35)",
+            boxShadow: "0 2px 12px rgba(20,56,46,0.3)",
             transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(99,102,241,0.45)"; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(99,102,241,0.35)"; }}>
+          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(20,56,46,0.4)"; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(20,56,46,0.3)"; }}>
             Jetzt starten →
           </button>
         </nav>
@@ -298,24 +287,37 @@
           minHeight: "100vh", display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center",
           padding: "7rem 2rem 4rem", position: "relative",
+          background: C.forest,
+          overflow: "hidden",
         }}>
+          {/* Decorative SVG rings */}
+          <svg
+            style={{ position: "absolute", bottom: -100, right: -100, opacity: 0.15, pointerEvents: "none" }}
+            width={500} height={500} viewBox="0 0 500 500" fill="none"
+          >
+            <circle cx={250} cy={250} r={200} stroke="#00C875" strokeWidth={2} />
+            <circle cx={250} cy={250} r={150} stroke="#00C875" strokeWidth={2} />
+            <circle cx={250} cy={250} r={100} stroke="#00C875" strokeWidth={2} />
+            <circle cx={250} cy={250} r={50} stroke="#00C875" strokeWidth={2} />
+          </svg>
+
           {/* Badge */}
           <div style={{
             opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(16px)",
             transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.05s",
             display: "inline-flex", alignItems: "center", gap: "0.5rem",
-            background: C.accentGlow, border: `1px solid ${C.accent}44`,
+            background: "rgba(0,200,117,0.12)", border: `1px solid rgba(0,200,117,0.4)`,
             borderRadius: 100, padding: "0.4rem 1rem", marginBottom: "2rem",
           }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: C.accentLight, animation: "glow 2s ease-in-out infinite" }} />
-            <span style={{ fontSize: "0.72rem", fontFamily: "'Space Mono', monospace", color: C.accentLight, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: C.mint, animation: "glow 2s ease-in-out infinite" }} />
+            <span style={{ fontSize: "0.72rem", fontFamily: "'DM Mono', monospace", color: C.mint, letterSpacing: "0.18em", textTransform: "uppercase" }}>
               InsurTech × Creator Economy
             </span>
           </div>
 
           {/* Headline */}
           <h1 style={{
-            fontFamily: "'Syne', sans-serif", fontWeight: 800,
+            fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800,
             fontSize: "clamp(2.6rem, 5.5vw, 5rem)",
             letterSpacing: "-0.035em", lineHeight: 1.05,
             textAlign: "center", maxWidth: 760,
@@ -323,18 +325,14 @@
             transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s",
             marginBottom: "1.25rem",
           }}>
-            <span style={{ color: C.text }}>Die erste KI-Versicherung</span>
+            <span style={{ color: C.white }}>Die erste KI-Versicherung</span>
             <br />
-            <span style={{
-              background: C.gradientText,
-              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>für Content Creator</span>
+            <span style={{ color: C.mint }}>für Content Creator</span>
           </h1>
 
           {/* Sub */}
           <p style={{
-            fontSize: "1.1rem", color: C.textMuted, textAlign: "center",
+            fontSize: "1.1rem", color: "rgba(255,255,255,0.7)", textAlign: "center",
             maxWidth: 520, lineHeight: 1.75,
             opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(16px)",
             transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.25s",
@@ -351,26 +349,26 @@
             marginBottom: "3.5rem",
           }}>
             <button onClick={onStart} style={{
-              background: C.gradient1, color: C.white, border: "none",
+              background: C.mint, color: C.forest, border: "none",
               padding: "0.85rem 2rem", borderRadius: 10,
-              fontSize: "0.95rem", fontWeight: 600, cursor: "pointer",
-              boxShadow: "0 4px 24px rgba(99,102,241,0.35)",
+              fontSize: "0.95rem", fontWeight: 700, cursor: "pointer",
+              boxShadow: "0 4px 24px rgba(0,200,117,0.35)",
               transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(99,102,241,0.5)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(99,102,241,0.35)"; }}>
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,200,117,0.5)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,200,117,0.35)"; }}>
               Kostenlos analysieren →
             </button>
             <a href="#how" style={{
-              background: "transparent", color: C.textMuted,
-              border: `1px solid ${C.border}`, padding: "0.85rem 1.75rem",
+              background: "transparent", color: "rgba(255,255,255,0.65)",
+              border: `1px solid rgba(255,255,255,0.25)`, padding: "0.85rem 1.75rem",
               borderRadius: 10, fontSize: "0.95rem", fontWeight: 500,
               cursor: "pointer", textDecoration: "none",
               transition: "border-color 0.2s, color 0.2s",
               display: "flex", alignItems: "center",
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = C.borderLight; e.currentTarget.style.color = C.text; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textMuted; }}>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; e.currentTarget.style.color = C.white; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"; e.currentTarget.style.color = "rgba(255,255,255,0.65)"; }}>
               So funktioniert's
             </a>
           </div>
@@ -383,12 +381,12 @@
             {platforms.map((p, i) => (
               <div key={p.name} style={{
                 display: "flex", alignItems: "center", gap: "0.5rem",
-                background: C.card, border: `1px solid ${C.border}`,
+                background: "rgba(255,255,255,0.08)", border: `1px solid rgba(255,255,255,0.15)`,
                 borderRadius: 10, padding: "0.55rem 1rem",
                 animation: visible ? `float ${3 + i * 0.7}s ease-in-out infinite ${i * 0.4}s` : "none",
               }}>
                 <span style={{ fontSize: "1.1rem" }}>{p.icon}</span>
-                <span style={{ fontSize: "0.8rem", fontWeight: 600, color: C.text }}>{p.name}</span>
+                <span style={{ fontSize: "0.8rem", fontWeight: 600, color: C.white }}>{p.name}</span>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: p.color, opacity: 0.8 }} />
               </div>
             ))}
@@ -400,8 +398,8 @@
             display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
             opacity: visible ? 0.4 : 0, transition: "opacity 1s 1.2s",
           }}>
-            <div style={{ width: 1, height: 40, background: `linear-gradient(to bottom, transparent, ${C.textDim})` }} />
-            <div style={{ fontSize: "0.6rem", fontFamily: "'Space Mono', monospace", color: C.textDim, letterSpacing: "0.15em" }}>SCROLL</div>
+            <div style={{ width: 1, height: 40, background: `linear-gradient(to bottom, transparent, rgba(255,255,255,0.5))` }} />
+            <div style={{ fontSize: "0.6rem", fontFamily: "'DM Mono', monospace", color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em" }}>SCROLL</div>
           </div>
         </section>
       );
@@ -417,10 +415,10 @@
         { value: "FINMA",     label: "Sandbox zertifiziert",    icon: "🏛️" },
       ];
       return (
-        <div ref={ref} style={{ padding: "0 2rem 4rem" }}>
+        <div ref={ref} style={{ padding: "0 2rem 4rem", background: C.white, borderTop: `1px solid ${C.rule}` }}>
           <div style={{
             maxWidth: 960, margin: "0 auto",
-            background: C.card, border: `1px solid ${C.border}`,
+            background: C.white, border: `1px solid ${C.rule}`,
             borderRadius: 16, padding: "2rem",
             display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
             gap: "1.5rem",
@@ -431,11 +429,11 @@
               <div key={i} className="stat-item" style={{ textAlign: "center", padding: "0.5rem", cursor: "default" }}>
                 <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{s.icon}</div>
                 <div className="stat-value" style={{
-                  fontSize: "1.35rem", fontFamily: "'Space Mono', monospace",
-                  fontWeight: 700, color: C.text, letterSpacing: "-0.02em",
+                  fontSize: "1.35rem", fontFamily: "'DM Mono', monospace",
+                  fontWeight: 700, color: C.ink, letterSpacing: "-0.02em",
                   transition: "color 0.2s",
                 }}>{s.value}</div>
-                <div style={{ fontSize: "0.72rem", color: C.textDim, marginTop: "0.2rem", fontWeight: 500, letterSpacing: "0.04em" }}>{s.label}</div>
+                <div style={{ fontSize: "0.72rem", color: C.ink4, marginTop: "0.2rem", fontWeight: 500, letterSpacing: "0.04em" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -452,36 +450,36 @@
         { num: "03", icon: "🛡️", title: "Sofortschutz",   desc: "Tarif wählen, Vertrag digital abschliessen — Police sofort per E-Mail." },
       ];
       return (
-        <section id="how" style={{ padding: "5rem 2rem", position: "relative" }}>
+        <section id="how" style={{ padding: "5rem 2rem", position: "relative", background: C.cream }}>
           <div style={{ maxWidth: 900, margin: "0 auto" }}>
             <div ref={ref} style={{ textAlign: "center", marginBottom: "3.5rem",
               opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(16px)",
               transition: "all 0.6s cubic-bezier(0.22,1,0.36,1)" }}>
-              <div style={{ fontSize: "0.72rem", fontFamily: "'Space Mono', monospace", color: C.accent,
+              <div style={{ fontSize: "0.72rem", fontFamily: "'DM Mono', monospace", color: C.forest,
                 letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.75rem" }}>Wie es funktioniert</div>
-              <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-                letterSpacing: "-0.03em", color: C.text }}>In 3 Schritten zur Police</h2>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                letterSpacing: "-0.03em", color: C.ink }}>In 3 Schritten zur Police</h2>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", position: "relative" }}>
               {/* Connector line */}
               <div style={{ position: "absolute", top: "3rem", left: "16.67%", right: "16.67%", height: 1,
-                background: `linear-gradient(to right, transparent, ${C.border}, ${C.border}, transparent)`,
+                background: `linear-gradient(to right, transparent, ${C.rule}, ${C.rule}, transparent)`,
                 display: "none" /* hidden on mobile */ }} />
               {steps.map((s, i) => (
                 <div key={i} style={{
-                  background: C.card, border: `1px solid ${C.border}`, borderRadius: 16,
+                  background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16,
                   padding: "2rem 1.75rem", position: "relative", overflow: "hidden",
                   opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(20px)",
                   transition: `all 0.7s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.15}s`,
                 }}>
                   {/* Step number watermark */}
-                  <div style={{ position: "absolute", top: -8, right: 12, fontFamily: "'Syne', sans-serif",
-                    fontSize: "4rem", fontWeight: 800, color: C.border, lineHeight: 1, userSelect: "none" }}>
+                  <div style={{ position: "absolute", top: -8, right: 12, fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "4rem", fontWeight: 800, color: C.rule, lineHeight: 1, userSelect: "none" }}>
                     {s.num}
                   </div>
                   <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>{s.icon}</div>
-                  <div style={{ fontSize: "1rem", fontWeight: 700, color: C.text, marginBottom: "0.5rem", fontFamily: "'Syne', sans-serif" }}>{s.title}</div>
-                  <div style={{ fontSize: "0.85rem", color: C.textMuted, lineHeight: 1.65 }}>{s.desc}</div>
+                  <div style={{ fontSize: "1rem", fontWeight: 700, color: C.ink, marginBottom: "0.5rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.title}</div>
+                  <div style={{ fontSize: "0.85rem", color: C.ink3, lineHeight: 1.65 }}>{s.desc}</div>
                 </div>
               ))}
             </div>
@@ -494,20 +492,20 @@
     function LandingProducts({ onStart }) {
       const [ref, inView] = useInView(0.1);
       return (
-        <section id="products" style={{ padding: "5rem 2rem", background: C.bgAlt }}>
+        <section id="products" style={{ padding: "5rem 2rem", background: C.white }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
             <div ref={ref} style={{ textAlign: "center", marginBottom: "3rem",
               opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(16px)",
               transition: "all 0.6s cubic-bezier(0.22,1,0.36,1)" }}>
-              <div style={{ fontSize: "0.72rem", fontFamily: "'Space Mono', monospace", color: C.accent,
+              <div style={{ fontSize: "0.72rem", fontFamily: "'DM Mono', monospace", color: C.forest,
                 letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.75rem" }}>Unsere Produkte</div>
-              <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-                letterSpacing: "-0.03em", color: C.text }}>Massgeschneidert für Creator</h2>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                letterSpacing: "-0.03em", color: C.ink }}>Massgeschneidert für Creator</h2>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem" }}>
               {INSURANCE_PRODUCTS.map((p, i) => (
                 <div key={p.id} className="product-card" style={{
-                  background: C.card, border: `1px solid ${C.border}`,
+                  background: C.white, border: `1px solid ${C.rule}`,
                   borderRadius: 16, padding: "1.75rem",
                   borderLeft: `3px solid ${p.color}`,
                   cursor: "pointer",
@@ -515,26 +513,26 @@
                   transition: `opacity 0.7s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.15}s, transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s`,
                 }}
                 onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 8px 32px ${p.glow}`; e.currentTarget.style.borderColor = `${p.color}66`; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = C.border; e.currentTarget.style.borderLeftColor = p.color; }}>
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = C.rule; e.currentTarget.style.borderLeftColor = p.color; }}>
                   <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "1.25rem" }}>
                     <div>
                       <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>{p.icon}</div>
-                      <div style={{ fontSize: "1rem", fontWeight: 700, color: C.text, fontFamily: "'Syne', sans-serif" }}>{p.name}</div>
-                      <div style={{ fontSize: "0.75rem", color: C.textDim, marginTop: "0.1rem" }}>{p.subtitle}</div>
+                      <div style={{ fontSize: "1rem", fontWeight: 700, color: C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{p.name}</div>
+                      <div style={{ fontSize: "0.75rem", color: C.ink4, marginTop: "0.1rem" }}>{p.subtitle}</div>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: "0.65rem", color: C.textDim }}>ab</div>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "1rem", fontWeight: 700, color: p.color }}>
+                      <div style={{ fontSize: "0.65rem", color: C.ink4 }}>ab</div>
+                      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "1rem", fontWeight: 700, color: p.color }}>
                         CHF {p.from}
                       </div>
-                      <div style={{ fontSize: "0.6rem", color: C.textDim }}>/Mt.</div>
+                      <div style={{ fontSize: "0.6rem", color: C.ink4 }}>/Mt.</div>
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                     {p.benefits.map(b => (
                       <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                         <span style={{ color: p.color, fontSize: "0.7rem", marginTop: "0.2rem", flexShrink: 0 }}>✓</span>
-                        <span style={{ fontSize: "0.8rem", color: C.textMuted, lineHeight: 1.5 }}>{b}</span>
+                        <span style={{ fontSize: "0.8rem", color: C.ink3, lineHeight: 1.5 }}>{b}</span>
                       </div>
                     ))}
                   </div>
@@ -556,28 +554,28 @@
         { icon: "↩️", title: "Sofort kündbar",          desc: "Keine Mindestlaufzeit, monatlich kündbar" },
       ];
       return (
-        <section style={{ padding: "5rem 2rem" }}>
+        <section style={{ padding: "5rem 2rem", background: C.cream }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
             <div ref={ref} style={{ textAlign: "center", marginBottom: "3rem",
               opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(16px)",
               transition: "all 0.6s cubic-bezier(0.22,1,0.36,1)" }}>
-              <div style={{ fontSize: "0.72rem", fontFamily: "'Space Mono', monospace", color: C.accent,
+              <div style={{ fontSize: "0.72rem", fontFamily: "'DM Mono', monospace", color: C.forest,
                 letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.75rem" }}>Vertrauen & Sicherheit</div>
-              <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-                letterSpacing: "-0.03em", color: C.text }}>Gebaut auf Vertrauen</h2>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                letterSpacing: "-0.03em", color: C.ink }}>Gebaut auf Vertrauen</h2>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
               {items.map((item, i) => (
                 <div key={i} className="trust-item" style={{
-                  background: C.card, border: `1px solid ${C.border}`,
+                  background: C.white, border: `1px solid ${C.rule}`,
                   borderRadius: 14, padding: "1.5rem 1.25rem", textAlign: "center",
                   cursor: "default",
                   opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(16px)",
                   transition: `opacity 0.7s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.1}s, border-color 0.2s, background 0.2s`,
                 }}>
                   <div style={{ fontSize: "1.75rem", marginBottom: "0.75rem" }}>{item.icon}</div>
-                  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: C.text, marginBottom: "0.35rem" }}>{item.title}</div>
-                  <div style={{ fontSize: "0.75rem", color: C.textDim, lineHeight: 1.5 }}>{item.desc}</div>
+                  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: C.ink, marginBottom: "0.35rem" }}>{item.title}</div>
+                  <div style={{ fontSize: "0.75rem", color: C.ink4, lineHeight: 1.5 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -590,37 +588,37 @@
     function LandingFinalCTA({ onStart }) {
       const [ref, inView] = useInView(0.2);
       return (
-        <section id="pricing" style={{ padding: "5rem 2rem 6rem" }}>
+        <section id="pricing" style={{ padding: "5rem 2rem 6rem", background: C.white }}>
           <div ref={ref} style={{
             maxWidth: 700, margin: "0 auto",
-            background: `linear-gradient(135deg, ${C.accentGlow} 0%, ${C.card} 100%)`,
-            border: `1px solid ${C.accent}44`, borderRadius: 24,
+            background: `linear-gradient(135deg, ${C.mintBg} 0%, ${C.white} 100%)`,
+            border: `1px solid rgba(0,200,117,0.3)`, borderRadius: 24,
             padding: "4rem 2.5rem", textAlign: "center",
             opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(24px)",
             transition: "all 0.7s cubic-bezier(0.22,1,0.36,1)",
           }}>
             <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>🛡️</div>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800,
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800,
               fontSize: "clamp(1.6rem, 3vw, 2.4rem)", letterSpacing: "-0.03em",
-              color: C.text, marginBottom: "0.75rem" }}>Bereit für deinen Schutz?</h2>
-            <p style={{ fontSize: "1rem", color: C.textMuted, lineHeight: 1.7, marginBottom: "2rem", maxWidth: 460, margin: "0 auto 2rem" }}>
+              color: C.ink, marginBottom: "0.75rem" }}>Bereit für deinen Schutz?</h2>
+            <p style={{ fontSize: "1rem", color: C.ink3, lineHeight: 1.7, marginBottom: "2rem", maxWidth: 460, margin: "0 auto 2rem" }}>
               Analysiere dein Risikoprofil in unter 3 Minuten und erhalte deine persönliche Police — ohne Papierkram.
             </p>
             <button onClick={onStart} style={{
-              background: C.gradient1, color: C.white, border: "none",
+              background: C.forest, color: C.white, border: "none",
               padding: "1rem 2.5rem", borderRadius: 12,
               fontSize: "1rem", fontWeight: 600, cursor: "pointer",
-              boxShadow: "0 4px 28px rgba(99,102,241,0.4)",
+              boxShadow: "0 4px 28px rgba(20,56,46,0.3)",
               transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 36px rgba(99,102,241,0.55)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 28px rgba(99,102,241,0.4)"; }}>
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 36px rgba(20,56,46,0.45)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 28px rgba(20,56,46,0.3)"; }}>
               Jetzt kostenlos starten →
             </button>
             <div style={{ marginTop: "1.5rem", display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
               {["Kostenlose Analyse", "Keine Kreditkarte nötig", "Sofort aktiv"].map(t => (
-                <div key={t} style={{ fontSize: "0.72rem", color: C.textDim, display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                  <span style={{ color: C.green }}>✓</span> {t}
+                <div key={t} style={{ fontSize: "0.72rem", color: C.ink4, display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                  <span style={{ color: C.mint }}>✓</span> {t}
                 </div>
               ))}
             </div>
@@ -633,7 +631,7 @@
     function LandingStep({ onNext }) {
       return (
         <div>
-          <LandingNav    onStart={onNext} />
+          <LandingNav    onStart={onNext} step={0} />
           <LandingHero   onStart={onNext} />
           <LandingStats  />
           <LandingHowItWorks />
@@ -653,17 +651,17 @@
             <div key={s} style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
               <div style={{
                 width: i + 1 === current ? "auto" : 24, height: 24, borderRadius: 100,
-                background: i + 1 <= current ? (i + 1 === 4 && current === 4 ? C.green : C.accent) : C.border,
+                background: i + 1 <= current ? (i + 1 === 4 && current === 4 ? C.mint : C.forest) : C.rule,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: "0.6rem", fontWeight: 700,
-                color: i + 1 <= current ? C.white : C.textDim,
+                color: i + 1 <= current ? C.white : C.ink4,
                 padding: i + 1 === current ? "0 0.75rem" : 0,
                 transition: "all 0.4s",
               }}>
                 {i + 1 < current ? "✓" : i + 1 === current ? s : i + 1}
               </div>
               {i < steps.length - 1 && (
-                <div style={{ width: 24, height: 1.5, background: i + 1 < current ? C.accent : C.border, transition: "background 0.4s" }} />
+                <div style={{ width: 24, height: 1.5, background: i + 1 < current ? C.forest : C.rule, transition: "background 0.4s" }} />
               )}
             </div>
           ))}
@@ -709,12 +707,12 @@
       };
 
       const inputStyle = {
-        background: C.card, border: `1.5px solid ${C.border}`, borderRadius: 10,
-        padding: "0.75rem 1rem", color: C.text, fontSize: "0.9rem", width: "100%",
+        background: C.white, border: `1.5px solid ${C.rule}`, borderRadius: 10,
+        padding: "0.75rem 1rem", color: C.ink, fontSize: "0.9rem", width: "100%",
         transition: "border-color 0.2s",
       };
       const labelStyle = {
-        fontSize: "0.72rem", color: C.textDim, marginBottom: "0.35rem",
+        fontSize: "0.72rem", color: C.ink4, marginBottom: "0.35rem",
         display: "block", fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase",
       };
 
@@ -722,15 +720,16 @@
         <div style={{
           minHeight: "100vh", display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", padding: "5rem 2rem 2rem",
+          background: C.cream,
           opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)",
           transition: "all 0.6s cubic-bezier(0.22,1,0.36,1)",
         }}>
           <StepIndicator current={1} />
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "2rem", fontWeight: 800,
-            letterSpacing: "-0.03em", color: C.text, margin: "2rem 0 0.4rem", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "2rem", fontWeight: 800,
+            letterSpacing: "-0.03em", color: C.ink, margin: "2rem 0 0.4rem", textAlign: "center" }}>
             Dein Creator-Profil
           </h2>
-          <p style={{ color: C.textMuted, fontSize: "0.9rem", marginBottom: "2rem", textAlign: "center" }}>
+          <p style={{ color: C.ink3, fontSize: "0.9rem", marginBottom: "2rem", textAlign: "center" }}>
             Unsere KI erstellt dein persönliches Risikoprofil in Echtzeit
           </p>
           <div style={{ width: "100%", maxWidth: 480, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -739,13 +738,13 @@
               <div style={{ display: "flex", gap: "0.75rem" }}>
                 {platforms.map(p => (
                   <div key={p.key} onClick={() => setPlatform(p.key)} style={{
-                    flex: 1, background: platform === p.key ? `${p.color}15` : C.card,
-                    border: `1.5px solid ${platform === p.key ? p.color : C.border}`,
+                    flex: 1, background: platform === p.key ? `${p.color}15` : C.white,
+                    border: `1.5px solid ${platform === p.key ? p.color : C.rule}`,
                     borderRadius: 12, padding: "0.85rem", textAlign: "center", cursor: "pointer",
                     transition: "border-color 0.2s, background 0.2s",
                   }}>
                     <div style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>{p.icon}</div>
-                    <div style={{ fontSize: "0.75rem", fontWeight: 600, color: platform === p.key ? C.text : C.textDim }}>{p.name}</div>
+                    <div style={{ fontSize: "0.75rem", fontWeight: 600, color: platform === p.key ? C.ink : C.ink4 }}>{p.name}</div>
                   </div>
                 ))}
               </div>
@@ -754,24 +753,24 @@
               <div>
                 <label style={labelStyle}>Handle *</label>
                 <input style={inputStyle} placeholder="@dein.handle" value={handle} onChange={e => setHandle(e.target.value)}
-                  onFocus={e => e.target.style.borderColor = C.accent} onBlur={e => e.target.style.borderColor = C.border} />
+                  onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
               </div>
               <div>
                 <label style={labelStyle}>E-Mail *</label>
                 <input style={inputStyle} type="email" placeholder="deine@email.ch" value={email} onChange={e => setEmail(e.target.value)}
-                  onFocus={e => e.target.style.borderColor = C.accent} onBlur={e => e.target.style.borderColor = C.border} />
+                  onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
               <div>
                 <label style={labelStyle}>Follower *</label>
                 <input style={inputStyle} type="number" placeholder="z.B. 85000" value={followers} onChange={e => setFollowers(e.target.value)}
-                  onFocus={e => e.target.style.borderColor = C.accent} onBlur={e => e.target.style.borderColor = C.border} />
+                  onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
               </div>
               <div>
                 <label style={labelStyle}>Engagement Rate %</label>
                 <input style={inputStyle} type="number" step="0.1" placeholder="z.B. 4.2" value={engagement} onChange={e => setEngagement(e.target.value)}
-                  onFocus={e => e.target.style.borderColor = C.accent} onBlur={e => e.target.style.borderColor = C.border} />
+                  onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
@@ -785,23 +784,23 @@
               <div>
                 <label style={labelStyle}>Monatsumsatz (CHF)</label>
                 <input style={inputStyle} type="number" placeholder="z.B. 5000" value={revenue} onChange={e => setRevenue(e.target.value)}
-                  onFocus={e => e.target.style.borderColor = C.accent} onBlur={e => e.target.style.borderColor = C.border} />
+                  onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
               </div>
             </div>
             <button onClick={handleSubmit} disabled={!canSubmit} style={{
-              background: canSubmit ? C.gradient1 : C.border,
-              color: canSubmit ? C.white : C.textDim,
+              background: canSubmit ? C.forest : C.rule,
+              color: canSubmit ? C.white : C.ink4,
               border: "none", padding: "1rem", borderRadius: 12,
               fontSize: "1rem", fontWeight: 600, cursor: canSubmit ? "pointer" : "not-allowed",
               marginTop: "0.5rem",
-              boxShadow: canSubmit ? "0 4px 20px rgba(99,102,241,0.3)" : "none",
+              boxShadow: canSubmit ? "0 4px 20px rgba(20,56,46,0.25)" : "none",
               transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s, background 0.3s",
             }}
-            onMouseEnter={e => { if (canSubmit) { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(99,102,241,0.4)"; }}}
-            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = canSubmit ? "0 4px 20px rgba(99,102,241,0.3)" : "none"; }}>
+            onMouseEnter={e => { if (canSubmit) { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(20,56,46,0.35)"; }}}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = canSubmit ? "0 4px 20px rgba(20,56,46,0.25)" : "none"; }}>
               KI-Analyse starten →
             </button>
-            <div style={{ fontSize: "0.65rem", color: C.textDim, textAlign: "center" }}>
+            <div style={{ fontSize: "0.65rem", color: C.ink4, textAlign: "center" }}>
               * Pflichtfelder · Daten werden verschlüsselt übertragen
             </div>
           </div>
@@ -865,36 +864,37 @@
         <div style={{
           minHeight: "100vh", display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", padding: "5rem 2rem 2rem",
+          background: C.cream,
           opacity: visible ? 1 : 0, transition: "opacity 0.5s",
         }}>
           <StepIndicator current={2} />
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "2rem", fontWeight: 800,
-            letterSpacing: "-0.03em", color: C.text, margin: "2rem 0 0.4rem" }}>KI-Analyse läuft</h2>
-          <p style={{ color: C.textMuted, fontSize: "0.9rem", marginBottom: "2.5rem" }}>
+          <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "2rem", fontWeight: 800,
+            letterSpacing: "-0.03em", color: C.ink, margin: "2rem 0 0.4rem" }}>KI-Analyse läuft</h2>
+          <p style={{ color: C.ink3, fontSize: "0.9rem", marginBottom: "2.5rem" }}>
             Claude AI bewertet dein Risikoprofil in Echtzeit
           </p>
 
           {/* Profile card */}
           <div style={{
-            background: C.card, border: `1px solid ${C.border}`, borderRadius: 14,
+            background: C.white, border: `1px solid ${C.rule}`, borderRadius: 14,
             padding: "1.25rem 1.5rem", marginBottom: "2rem",
             display: "flex", alignItems: "center", gap: "1.25rem", minWidth: 340,
           }}>
-            <div style={{ width: 48, height: 48, borderRadius: "50%", background: C.gradient1,
+            <div style={{ width: 48, height: 48, borderRadius: "50%", background: C.forest,
               display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem", flexShrink: 0 }}>
               {platformIcon}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 600, color: C.text, fontSize: "0.95rem" }}>{profileData.handle}</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", color: C.textDim }}>
+              <div style={{ fontWeight: 600, color: C.ink, fontSize: "0.95rem" }}>{profileData.handle}</div>
+              <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", color: C.ink4 }}>
                 {profileData.platform} · {profileData.niche || "Creator"}
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontWeight: 700, color: C.text, fontFamily: "'Space Mono', monospace", fontSize: "0.95rem" }}>
+              <div style={{ fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace", fontSize: "0.95rem" }}>
                 {(profileData.followers || 0).toLocaleString("de-CH")}
               </div>
-              <div style={{ fontSize: "0.6rem", color: C.textDim }}>Follower</div>
+              <div style={{ fontSize: "0.6rem", color: C.ink4 }}>Follower</div>
             </div>
           </div>
 
@@ -904,26 +904,26 @@
               const done = phase > i, active = phase === i;
               return (
                 <div key={i} style={{
-                  background: done ? `${C.accent}08` : C.card,
-                  border: `1px solid ${done ? C.accent + "33" : active ? C.accent + "55" : C.border}`,
+                  background: done ? `rgba(0,200,117,0.06)` : C.white,
+                  border: `1px solid ${done ? "rgba(0,200,117,0.3)" : active ? "rgba(0,200,117,0.5)" : C.rule}`,
                   borderRadius: 12, padding: "0.9rem 1.25rem",
                   display: "flex", alignItems: "center", gap: "1rem",
                   transition: "border-color 0.4s, background 0.4s",
                 }}>
                   <div style={{
                     width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
-                    background: done ? C.green : active ? C.accent : C.border,
+                    background: done ? C.mint : active ? C.forest : C.rule,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: "0.75rem", color: C.white, fontWeight: 700,
                     transition: "background 0.4s",
-                    boxShadow: active ? `0 0 14px ${C.accent}55` : "none",
+                    boxShadow: active ? `0 0 14px rgba(20,56,46,0.35)` : "none",
                   }}>
                     {done ? "✓" : active ? <span style={{ animation: "spin 1s linear infinite", display: "inline-block" }}>⟳</span> : i + 1}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: "0.85rem", fontWeight: 600, color: done || active ? C.text : C.textDim }}>{s.label}</div>
+                    <div style={{ fontSize: "0.85rem", fontWeight: 600, color: done || active ? C.ink : C.ink4 }}>{s.label}</div>
                     {(done || active) && (
-                      <div style={{ fontSize: "0.68rem", color: C.textMuted, fontFamily: "'Space Mono', monospace", marginTop: "0.1rem", opacity: done ? 1 : 0.6 }}>
+                      <div style={{ fontSize: "0.68rem", color: C.ink3, fontFamily: "'DM Mono', monospace", marginTop: "0.1rem", opacity: done ? 1 : 0.6 }}>
                         {s.detail}
                       </div>
                     )}
@@ -935,19 +935,19 @@
 
           {phase >= 4 && (
             <button onClick={handleNext} style={{
-              marginTop: "2rem", background: C.gradient1, color: C.white, border: "none",
+              marginTop: "2rem", background: C.forest, color: C.white, border: "none",
               padding: "0.85rem 2.5rem", borderRadius: 12, fontSize: "0.95rem", fontWeight: 600, cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(99,102,241,0.3)", animation: "fadeUp 0.5s both",
+              boxShadow: "0 4px 20px rgba(20,56,46,0.25)", animation: "fadeUp 0.5s both",
               transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(99,102,241,0.45)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.3)"; }}>
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(20,56,46,0.4)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(20,56,46,0.25)"; }}>
               Ergebnis anzeigen →
             </button>
           )}
           {phase >= 3 && !apiDone && (
-            <div style={{ marginTop: "1.5rem", fontSize: "0.72rem", color: C.textDim, animation: "pulse 1.5s infinite",
-              fontFamily: "'Space Mono', monospace" }}>
+            <div style={{ marginTop: "1.5rem", fontSize: "0.72rem", color: C.ink4, animation: "pulse 1.5s infinite",
+              fontFamily: "'DM Mono', monospace" }}>
               Claude AI analysiert dein Profil...
             </div>
           )}
@@ -973,7 +973,7 @@
       };
       const tierData = tiers[tier] || tiers.pro;
       const toggleProduct = (id) => setSelectedProducts(prev => prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]);
-      const getRiskColor = (score) => score < 30 ? C.green : score < 50 ? C.orange : C.red;
+      const getRiskColor = (score) => score < 30 ? C.mint : score < 50 ? C.amber : C.red;
       const getRiskLabel = (score) => score < 30 ? "Niedrig" : score < 50 ? "Mittel" : "Hoch";
       const rd = data.risk_details || {};
 
@@ -1024,6 +1024,7 @@
       return (
         <div style={{
           minHeight: "100vh", padding: "5rem 2rem 3rem",
+          background: C.cream,
           opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)",
           transition: "all 0.7s cubic-bezier(0.22,1,0.36,1)",
         }}>
@@ -1031,12 +1032,12 @@
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "2.5rem" }}>
               <StepIndicator current={3} />
             </div>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "2rem", fontWeight: 800,
-              letterSpacing: "-0.03em", color: C.text, margin: "0 0 0.4rem", textAlign: "center" }}>
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "2rem", fontWeight: 800,
+              letterSpacing: "-0.03em", color: C.ink, margin: "0 0 0.4rem", textAlign: "center" }}>
               Dein Versicherungs-Profil
             </h2>
-            <p style={{ color: C.textMuted, fontSize: "0.9rem", marginBottom: "2rem", textAlign: "center" }}>
-              Basierend auf der KI-Analyse von <span style={{ color: C.accentLight, fontWeight: 600 }}>{data.handle || profileData.handle}</span>
+            <p style={{ color: C.ink3, fontSize: "0.9rem", marginBottom: "2rem", textAlign: "center" }}>
+              Basierend auf der KI-Analyse von <span style={{ color: C.forest, fontWeight: 600 }}>{data.handle || profileData.handle}</span>
             </p>
 
             {/* Risk scores */}
@@ -1048,30 +1049,30 @@
                 { label: "Content Risk",  value: `${rd.content?.score || 30}`,     color: getRiskColor(rd.content?.score || 30),  sub: rd.content?.level  || "Mittel" },
               ].map((item, i) => (
                 <div key={i} style={{
-                  background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "1.25rem",
+                  background: C.white, border: `1px solid ${C.rule}`, borderRadius: 14, padding: "1.25rem",
                   animation: visible ? `fadeUp 0.5s ${0.15 + i * 0.1}s both` : "none",
                 }}>
-                  <div style={{ fontSize: "0.65rem", color: C.textDim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>{item.label}</div>
-                  <div style={{ fontSize: "1.6rem", fontWeight: 700, color: item.color, fontFamily: "'Space Mono', monospace" }}>{item.value}</div>
-                  <div style={{ fontSize: "0.7rem", color: C.textMuted, marginTop: "0.25rem" }}>{item.sub}</div>
+                  <div style={{ fontSize: "0.65rem", color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>{item.label}</div>
+                  <div style={{ fontSize: "1.6rem", fontWeight: 700, color: item.color, fontFamily: "'DM Mono', monospace" }}>{item.value}</div>
+                  <div style={{ fontSize: "0.7rem", color: C.ink3, marginTop: "0.25rem" }}>{item.sub}</div>
                 </div>
               ))}
             </div>
 
             {/* AI Recommendation */}
             {data.recommendation && (
-              <div style={{ background: C.accentGlow, border: `1px solid ${C.accent}33`, borderRadius: 12,
+              <div style={{ background: C.mintBg, border: `1px solid rgba(0,200,117,0.3)`, borderRadius: 12,
                 padding: "1rem 1.25rem", marginBottom: "1.5rem" }}>
-                <div style={{ fontSize: "0.68rem", color: C.accent, fontWeight: 700, marginBottom: "0.35rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                <div style={{ fontSize: "0.68rem", color: C.forest, fontWeight: 700, marginBottom: "0.35rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                   🤖 KI-Empfehlung
                 </div>
-                <div style={{ fontSize: "0.85rem", color: C.textMuted, lineHeight: 1.65 }}>{data.recommendation}</div>
+                <div style={{ fontSize: "0.85rem", color: C.ink3, lineHeight: 1.65 }}>{data.recommendation}</div>
               </div>
             )}
 
             {/* Product selection */}
-            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
-              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.textDim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
+            <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
                 Versicherungsprodukte wählen
               </div>
               <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
@@ -1082,7 +1083,7 @@
                     <div key={p.id} onClick={() => toggleProduct(p.id)} style={{
                       flex: "1 1 auto", minWidth: 190,
                       background: selected ? `${p.color}10` : "transparent",
-                      border: `1.5px solid ${selected ? p.color + "88" : C.border}`,
+                      border: `1.5px solid ${selected ? p.color + "88" : C.rule}`,
                       borderRadius: 12, padding: "1rem 1.25rem", cursor: "pointer",
                       transition: "border-color 0.2s, background 0.2s",
                     }}>
@@ -1090,19 +1091,19 @@
                         <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
                           <span style={{ fontSize: "1.25rem" }}>{p.icon}</span>
                           <div>
-                            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: C.text }}>{p.name}</div>
-                            <div style={{ fontSize: "0.68rem", color: C.textDim }}>{p.subtitle}</div>
+                            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: C.ink }}>{p.name}</div>
+                            <div style={{ fontSize: "0.68rem", color: C.ink4 }}>{p.subtitle}</div>
                           </div>
                         </div>
                         <div style={{
                           width: 20, height: 20, borderRadius: 5,
-                          border: `2px solid ${selected ? p.color : C.border}`,
+                          border: `2px solid ${selected ? p.color : C.rule}`,
                           background: selected ? p.color : "transparent",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           fontSize: "0.65rem", color: C.white, transition: "all 0.2s",
                         }}>{selected && "✓"}</div>
                       </div>
-                      <div style={{ marginTop: "0.5rem", fontSize: "0.72rem", color: C.textMuted, fontFamily: "'Space Mono', monospace" }}>
+                      <div style={{ marginTop: "0.5rem", fontSize: "0.72rem", color: C.ink3, fontFamily: "'DM Mono', monospace" }}>
                         CHF {price?.monthly?.toFixed(2) || "—"}/Mt.
                       </div>
                     </div>
@@ -1112,32 +1113,32 @@
             </div>
 
             {/* Tier selection */}
-            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
-              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.textDim, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
+            <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
                 Tarif wählen
               </div>
               <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                 {Object.entries(tiers).map(([key, t]) => (
                   <div key={key} onClick={() => setTier(key)} style={{
                     flex: "1 1 auto", minWidth: 155,
-                    background: tier === key ? C.accentGlow : "transparent",
-                    border: `1.5px solid ${tier === key ? C.accent : C.border}`,
+                    background: tier === key ? C.mintBg : "transparent",
+                    border: `1.5px solid ${tier === key ? C.forest : C.rule}`,
                     borderRadius: 12, padding: "1rem 1.25rem", cursor: "pointer",
                     position: "relative", transition: "border-color 0.2s, background 0.2s",
                   }}>
                     {key === "pro" && (
                       <div style={{ position: "absolute", top: -8, right: 10,
-                        background: C.gradient1, color: C.white,
+                        background: C.forest, color: C.white,
                         fontSize: "0.5rem", fontWeight: 700, padding: "0.15rem 0.55rem",
                         borderRadius: 100, textTransform: "uppercase", letterSpacing: "0.08em" }}>
                         Empfohlen
                       </div>
                     )}
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: tier === key ? C.accentLight : C.text, fontFamily: "'Syne', sans-serif" }}>{t.label}</div>
-                    <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.text, fontFamily: "'Space Mono', monospace", marginTop: "0.3rem" }}>
+                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: tier === key ? C.forest : C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t.label}</div>
+                    <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace", marginTop: "0.3rem" }}>
                       CHF {t.monthly?.toFixed(2)}
                     </div>
-                    <div style={{ fontSize: "0.62rem", color: C.textDim }}>pro Monat</div>
+                    <div style={{ fontSize: "0.62rem", color: C.ink4 }}>pro Monat</div>
                   </div>
                 ))}
               </div>
@@ -1145,62 +1146,61 @@
 
             {/* CTA / Summary */}
             <div style={{
-              background: `linear-gradient(135deg, ${C.accentGlow2} 0%, ${C.card} 100%)`,
-              border: `1.5px solid ${C.accent}44`, borderRadius: 16,
+              background: `linear-gradient(135deg, rgba(0,200,117,0.06) 0%, ${C.white} 100%)`,
+              border: `1.5px solid rgba(0,200,117,0.25)`, borderRadius: 16,
               padding: "2rem", textAlign: "center",
             }}>
-              <div style={{ fontSize: "0.68rem", color: C.textDim, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.5rem" }}>
+              <div style={{ fontSize: "0.68rem", color: C.ink4, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.5rem" }}>
                 Dein monatlicher Beitrag
               </div>
-              <div style={{ fontSize: "3rem", fontWeight: 800, fontFamily: "'Space Mono', monospace",
-                background: C.gradient1, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                backgroundClip: "text", letterSpacing: "-0.03em" }}>
+              <div style={{ fontSize: "3rem", fontWeight: 800, fontFamily: "'DM Mono', monospace",
+                color: C.forest, letterSpacing: "-0.03em" }}>
                 CHF {tierData.monthly?.toFixed(2) || "—"}
               </div>
-              <div style={{ fontSize: "0.8rem", color: C.textMuted, marginBottom: "0.4rem" }}>
+              <div style={{ fontSize: "0.8rem", color: C.ink3, marginBottom: "0.4rem" }}>
                 pro Monat · {tierData.label} · Bundle-Rabatt inklusive
               </div>
               {tierData.yearly_monthly && (
-                <div style={{ fontSize: "0.72rem", color: C.textDim, marginBottom: "1.75rem" }}>
+                <div style={{ fontSize: "0.72rem", color: C.ink4, marginBottom: "1.75rem" }}>
                   oder CHF {tierData.yearly_monthly?.toFixed(2)}/Mt. bei Jahreszahlung
                 </div>
               )}
               <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
                 <button onClick={handleContract} disabled={contracting} style={{
-                  background: contracting ? C.border : C.gradient1,
+                  background: contracting ? C.rule : C.forest,
                   color: C.white, border: "none", padding: "0.85rem 2.5rem",
                   borderRadius: 12, fontSize: "0.95rem", fontWeight: 600,
                   cursor: contracting ? "not-allowed" : "pointer",
-                  boxShadow: contracting ? "none" : "0 4px 20px rgba(99,102,241,0.3)",
+                  boxShadow: contracting ? "none" : "0 4px 20px rgba(20,56,46,0.25)",
                   display: "flex", alignItems: "center", gap: "0.5rem",
                   transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
                 }}
-                onMouseEnter={e => { if (!contracting) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(99,102,241,0.45)"; }}}
-                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = contracting ? "none" : "0 4px 20px rgba(99,102,241,0.3)"; }}>
+                onMouseEnter={e => { if (!contracting) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(20,56,46,0.4)"; }}}
+                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = contracting ? "none" : "0 4px 20px rgba(20,56,46,0.25)"; }}>
                   {contracting && <span style={{ animation: "spin 1s linear infinite", display: "inline-block" }}>⟳</span>}
                   {contracting ? "Vertrag wird erstellt..." : "Jetzt abschliessen →"}
                 </button>
                 <button style={{
-                  background: "transparent", color: C.textMuted,
-                  border: `1px solid ${C.border}`, padding: "0.85rem 2rem",
+                  background: "transparent", color: C.ink3,
+                  border: `1px solid ${C.rule}`, padding: "0.85rem 2rem",
                   borderRadius: 12, fontSize: "0.9rem", cursor: "pointer",
                   transition: "border-color 0.2s, color 0.2s",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = C.borderLight; e.currentTarget.style.color = C.text; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.textMuted; }}>
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.rule2; e.currentTarget.style.color = C.ink; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = C.rule; e.currentTarget.style.color = C.ink3; }}>
                   PDF Offerte
                 </button>
               </div>
-              <div style={{ marginTop: "1.5rem", padding: "0.75rem", background: `${C.green}12`,
-                border: `1px solid ${C.green}33`, borderRadius: 8 }}>
-                <div style={{ fontSize: "0.72rem", color: C.green }}>
+              <div style={{ marginTop: "1.5rem", padding: "0.75rem", background: `rgba(0,200,117,0.08)`,
+                border: `1px solid rgba(0,200,117,0.25)`, borderRadius: 8 }}>
+                <div style={{ fontSize: "0.72rem", color: C.mint }}>
                   ✓ Detailliertes Angebot wurde an <strong>{profileData?.email}</strong> gesendet
                 </div>
               </div>
               <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
                 {["FINMA Sandbox", "256-bit Verschlüsselung", "Sofort kündbar"].map(t => (
-                  <div key={t} style={{ fontSize: "0.65rem", color: C.textDim, display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                    <span style={{ color: C.green }}>✓</span> {t}
+                  <div key={t} style={{ fontSize: "0.65rem", color: C.ink4, display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                    <span style={{ color: C.mint }}>✓</span> {t}
                   </div>
                 ))}
               </div>
@@ -1218,6 +1218,7 @@
         <div style={{
           minHeight: "100vh", display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", padding: "5rem 2rem 2rem",
+          background: C.cream,
           opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)",
           transition: "all 0.7s cubic-bezier(0.22,1,0.36,1)",
         }}>
@@ -1225,97 +1226,97 @@
           <div style={{ maxWidth: 600, width: "100%", textAlign: "center", marginTop: "2.5rem" }}>
             {/* Success icon */}
             <div style={{
-              width: 80, height: 80, borderRadius: "50%", background: C.gradient2,
+              width: 80, height: 80, borderRadius: "50%", background: C.mint,
               display: "flex", alignItems: "center", justifyContent: "center",
               margin: "0 auto 1.5rem", fontSize: "2.25rem",
               animation: "checkmark 0.6s cubic-bezier(0.22,1,0.36,1)",
-              boxShadow: "0 0 40px rgba(16,185,129,0.25)",
+              boxShadow: "0 0 40px rgba(0,200,117,0.25)",
             }}>✓</div>
 
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "2rem", fontWeight: 800,
-              letterSpacing: "-0.03em", color: C.text, margin: "0 0 0.5rem" }}>
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "2rem", fontWeight: 800,
+              letterSpacing: "-0.03em", color: C.ink, margin: "0 0 0.5rem" }}>
               Versicherung abgeschlossen!
             </h2>
-            <p style={{ color: C.textMuted, fontSize: "0.9rem", marginBottom: "2rem" }}>
+            <p style={{ color: C.ink3, fontSize: "0.9rem", marginBottom: "2rem" }}>
               Dein Schutz ist ab sofort aktiv
             </p>
 
             {/* Contract details */}
-            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "1.75rem", textAlign: "left", marginBottom: "1.25rem" }}>
-              <div style={{ fontSize: "0.65rem", color: C.textDim, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1rem" }}>Vertragsdetails</div>
+            <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.75rem", textAlign: "left", marginBottom: "1.25rem" }}>
+              <div style={{ fontSize: "0.65rem", color: C.ink4, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1rem" }}>Vertragsdetails</div>
               {[
-                ["Vertragsnummer", contractData.contract_number, C.accentLight],
-                ["Vertragsbeginn", contractData.contract_date,   C.text],
-                ["Tarif",          contractData.selected_tier_label, C.accentLight],
-                ["Handle",         contractData.handle,          C.text],
-                ["Plattform",      contractData.platform,        C.text],
+                ["Vertragsnummer", contractData.contract_number, C.forest],
+                ["Vertragsbeginn", contractData.contract_date,   C.ink],
+                ["Tarif",          contractData.selected_tier_label, C.forest],
+                ["Handle",         contractData.handle,          C.ink],
+                ["Plattform",      contractData.platform,        C.ink],
               ].map(([label, value, color]) => (
-                <div key={label} style={{ display: "flex", justifyContent: "space-between", padding: "0.6rem 0", borderBottom: `1px solid ${C.border}` }}>
-                  <span style={{ color: C.textMuted, fontSize: "0.85rem" }}>{label}</span>
-                  <span style={{ color, fontWeight: 600, fontSize: "0.85rem", fontFamily: label === "Vertragsnummer" ? "'Space Mono', monospace" : "inherit" }}>
+                <div key={label} style={{ display: "flex", justifyContent: "space-between", padding: "0.6rem 0", borderBottom: `1px solid ${C.rule}` }}>
+                  <span style={{ color: C.ink3, fontSize: "0.85rem" }}>{label}</span>
+                  <span style={{ color, fontWeight: 600, fontSize: "0.85rem", fontFamily: label === "Vertragsnummer" ? "'DM Mono', monospace" : "inherit" }}>
                     {value}
                   </span>
                 </div>
               ))}
               <div style={{ display: "flex", justifyContent: "space-between", padding: "0.85rem 0", marginTop: "0.25rem" }}>
-                <span style={{ color: C.textMuted, fontSize: "0.85rem" }}>Monatsprämie</span>
-                <span style={{ color: C.green, fontWeight: 700, fontSize: "1.2rem", fontFamily: "'Space Mono', monospace" }}>
+                <span style={{ color: C.ink3, fontSize: "0.85rem" }}>Monatsprämie</span>
+                <span style={{ color: C.mint, fontWeight: 700, fontSize: "1.2rem", fontFamily: "'DM Mono', monospace" }}>
                   CHF {contractData.monthly_premium?.toFixed(2)}
                 </span>
               </div>
             </div>
 
             {/* Coverage */}
-            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "1.5rem", textAlign: "left", marginBottom: "1.25rem" }}>
-              <div style={{ fontSize: "0.65rem", color: C.textDim, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.75rem" }}>
+            <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.5rem", textAlign: "left", marginBottom: "1.25rem" }}>
+              <div style={{ fontSize: "0.65rem", color: C.ink4, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.75rem" }}>
                 Dein Schutz umfasst
               </div>
               {INSURANCE_PRODUCTS.map(p => (
                 <div key={p.id} style={{ display: "flex", alignItems: "center", gap: "0.65rem", padding: "0.5rem 0" }}>
                   <span style={{ fontSize: "1.1rem" }}>{p.icon}</span>
-                  <span style={{ fontSize: "0.85rem", color: C.text, flex: 1 }}>{p.name}</span>
-                  <span style={{ fontSize: "0.7rem", color: C.green, fontWeight: 600 }}>✓ Aktiv</span>
+                  <span style={{ fontSize: "0.85rem", color: C.ink, flex: 1 }}>{p.name}</span>
+                  <span style={{ fontSize: "0.7rem", color: C.mint, fontWeight: 600 }}>✓ Aktiv</span>
                 </div>
               ))}
             </div>
 
             {/* Email confirmation */}
-            <div style={{ background: `${C.green}12`, border: `1px solid ${C.green}33`, borderRadius: 12, padding: "1rem", marginBottom: "1.25rem" }}>
-              <div style={{ fontSize: "0.8rem", color: C.green }}>
+            <div style={{ background: `rgba(0,200,117,0.08)`, border: `1px solid rgba(0,200,117,0.25)`, borderRadius: 12, padding: "1rem", marginBottom: "1.25rem" }}>
+              <div style={{ fontSize: "0.8rem", color: C.mint }}>
                 ✓ Vertragsbestätigung an <strong>{contractData.email || profileData?.email}</strong> gesendet
               </div>
-              <div style={{ fontSize: "0.7rem", color: C.textDim, marginTop: "0.3rem" }}>
+              <div style={{ fontSize: "0.7rem", color: C.ink4, marginTop: "0.3rem" }}>
                 Kundendaten im CRM gespeichert · Risikoportfolio aktualisiert · Umsatz erfasst
               </div>
             </div>
 
             {/* Next steps */}
-            <div style={{ background: C.accentGlow, border: `1px solid ${C.accent}33`, borderRadius: 12, padding: "1rem", marginBottom: "1.75rem", textAlign: "left" }}>
-              <div style={{ fontSize: "0.68rem", color: C.accent, fontWeight: 700, marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            <div style={{ background: C.mintBg, border: `1px solid rgba(0,200,117,0.3)`, borderRadius: 12, padding: "1rem", marginBottom: "1.75rem", textAlign: "left" }}>
+              <div style={{ fontSize: "0.68rem", color: C.forest, fontWeight: 700, marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Nächste Schritte
               </div>
               {["Verbinde deinen Account im Dashboard", "Aktiviere den Content-Scanner", "Registriere deine erste Kampagne"].map((step, i) => (
-                <div key={i} style={{ fontSize: "0.82rem", color: C.textMuted, padding: "0.2rem 0", display: "flex", gap: "0.5rem" }}>
-                  <span style={{ color: C.textDim, fontFamily: "'Space Mono', monospace", fontSize: "0.7rem" }}>0{i + 1}.</span>
+                <div key={i} style={{ fontSize: "0.82rem", color: C.ink3, padding: "0.2rem 0", display: "flex", gap: "0.5rem" }}>
+                  <span style={{ color: C.ink4, fontFamily: "'DM Mono', monospace", fontSize: "0.7rem" }}>0{i + 1}.</span>
                   {step}
                 </div>
               ))}
             </div>
 
             <button style={{
-              background: C.gradient1, color: C.white, border: "none",
+              background: C.forest, color: C.white, border: "none",
               padding: "0.9rem 2.5rem", borderRadius: 12, fontSize: "0.95rem", fontWeight: 600, cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(99,102,241,0.3)",
+              boxShadow: "0 4px 20px rgba(20,56,46,0.25)",
               transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(99,102,241,0.45)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.3)"; }}>
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(20,56,46,0.4)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(20,56,46,0.25)"; }}>
               Zum Dashboard →
             </button>
             <div style={{ marginTop: "1.25rem", display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
               {["FINMA Sandbox", "256-bit Verschlüsselung", "Sofort kündbar"].map(t => (
-                <div key={t} style={{ fontSize: "0.65rem", color: C.textDim, display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                  <span style={{ color: C.green }}>✓</span> {t}
+                <div key={t} style={{ fontSize: "0.65rem", color: C.ink4, display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                  <span style={{ color: C.mint }}>✓</span> {t}
                 </div>
               ))}
             </div>
@@ -1403,14 +1404,14 @@
         maxWidth: "82%",
         alignSelf: role === "user" ? "flex-end" : "flex-start",
         background: role === "user"
-          ? "linear-gradient(135deg, #6366F1, #8B5CF6)"
-          : "#1A2332",
-        color: "#F1F5F9",
+          ? "#14382E"
+          : "#FAFAF7",
+        color: role === "user" ? "#FFFFFF" : "#1A1A1A",
         padding: "0.65rem 0.95rem",
         borderRadius: role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
         fontSize: "0.82rem",
         lineHeight: 1.5,
-        border: role === "user" ? "none" : "1px solid #1E2A3B",
+        border: role === "user" ? "none" : "1px solid #E5E5E0",
         wordBreak: "break-word",
       });
 
@@ -1422,8 +1423,8 @@
             style: {
               position: "fixed", bottom: 28, right: 28, zIndex: 9999,
               width: 56, height: 56, borderRadius: "50%", border: "none",
-              background: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
-              boxShadow: "0 4px 24px rgba(99,102,241,0.45)",
+              background: "#14382E",
+              boxShadow: "0 4px 24px rgba(20,56,46,0.35)",
               cursor: "pointer", fontSize: "1.4rem",
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s",
@@ -1438,10 +1439,10 @@
               position: "fixed", bottom: 96, right: 28, zIndex: 9998,
               width: 360, maxWidth: "calc(100vw - 56px)",
               height: 520, maxHeight: "calc(100vh - 120px)",
-              background: "#0D1220",
-              border: "1px solid #1E2A3B",
+              background: "#FFFFFF",
+              border: "1px solid #E5E5E0",
               borderRadius: 20,
-              boxShadow: "0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.12)",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,200,117,0.08)",
               display: "flex", flexDirection: "column",
               animation: "fadeUp 0.3s cubic-bezier(0.22,1,0.36,1) both",
               overflow: "hidden",
@@ -1450,8 +1451,8 @@
             /* Header */
             React.createElement("div", {
               style: {
-                padding: "1rem 1.2rem", background: "#101827",
-                borderBottom: "1px solid #1E2A3B",
+                padding: "1rem 1.2rem", background: "#FFFFFF",
+                borderBottom: "1px solid #E5E5E0",
                 display: "flex", alignItems: "center", gap: "0.75rem",
                 flexShrink: 0,
               }
@@ -1459,23 +1460,23 @@
               React.createElement("div", {
                 style: {
                   width: 36, height: 36, borderRadius: "50%",
-                  background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                  background: "#14382E",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "1rem", flexShrink: 0,
                 }
               }, "🛡️"),
               React.createElement("div", null,
                 React.createElement("div", {
-                  style: { fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "0.9rem", letterSpacing: "-0.01em" }
+                  style: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: "0.9rem", letterSpacing: "-0.01em" }
                 },
-                  React.createElement("span", { style: { color: "#F1F5F9" } }, "shield"),
-                  React.createElement("span", { style: { color: "#818CF8" } }, "creator"),
-                  React.createElement("span", { style: { color: "#94A3B8", fontWeight: 400, fontSize: "0.7rem", marginLeft: 6 } }, "Assistent")
+                  React.createElement("span", { style: { color: "#1A1A1A" } }, "shield"),
+                  React.createElement("span", { style: { color: "#00C875" } }, "creator"),
+                  React.createElement("span", { style: { color: "#6B6B6B", fontWeight: 400, fontSize: "0.7rem", marginLeft: 6 } }, "Assistent")
                 ),
                 React.createElement("div", {
-                  style: { fontSize: "0.65rem", color: "#10B981", display: "flex", alignItems: "center", gap: 4 }
+                  style: { fontSize: "0.65rem", color: "#00C875", display: "flex", alignItems: "center", gap: 4 }
                 },
-                  React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "#10B981", display: "inline-block" } }),
+                  React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "#00C875", display: "inline-block" } }),
                   "Online"
                 )
               )
@@ -1486,18 +1487,18 @@
               style: {
                 flex: 1, overflowY: "auto", padding: "1rem",
                 display: "flex", flexDirection: "column", gap: "0.65rem",
-                scrollbarWidth: "thin", scrollbarColor: "#1E2A3B #0D1220",
+                scrollbarWidth: "thin", scrollbarColor: "#E5E5E0 #FFFFFF",
               }
             },
               messages.map((m, i) =>
                 React.createElement("div", { key: i, style: { display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" } },
                   React.createElement("div", { style: bubbleStyle(m.role) },
-                    m.content,
+                    m.role === "user" ? m.content : React.createElement("span", { dangerouslySetInnerHTML: { __html: parseMarkdown(m.content) } }),
                     m.content.includes("support@shieldcreator.com") &&
                       React.createElement("div", { style: { marginTop: "0.4rem" } },
                         React.createElement("a", {
                           href: "mailto:support@shieldcreator.com",
-                          style: { color: "#818CF8", fontSize: "0.75rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }
+                          style: { color: "#00C875", fontSize: "0.75rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }
                         }, "📧 support@shieldcreator.com")
                       )
                   )
@@ -1509,7 +1510,7 @@
                     React.createElement("span", {
                       key: i,
                       style: {
-                        width: 6, height: 6, borderRadius: "50%", background: "#6366F1",
+                        width: 6, height: 6, borderRadius: "50%", background: "#14382E",
                         animation: "pulse 1.2s ease-in-out infinite",
                         animationDelay: `${i * 0.2}s`,
                       }
@@ -1529,13 +1530,13 @@
                   key: q,
                   onClick: () => sendMessage(q),
                   style: {
-                    background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)",
-                    color: "#818CF8", borderRadius: 20, padding: "0.3rem 0.75rem",
-                    fontSize: "0.7rem", cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                    background: "#E8FAF0", border: "1px solid rgba(0,200,117,0.3)",
+                    color: "#14382E", borderRadius: 20, padding: "0.3rem 0.75rem",
+                    fontSize: "0.7rem", cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
                     transition: "background 0.2s",
                   },
-                  onMouseEnter: e => e.currentTarget.style.background = "rgba(99,102,241,0.2)",
-                  onMouseLeave: e => e.currentTarget.style.background = "rgba(99,102,241,0.1)",
+                  onMouseEnter: e => e.currentTarget.style.background = "rgba(0,200,117,0.2)",
+                  onMouseLeave: e => e.currentTarget.style.background = "#E8FAF0",
                 }, q)
               )
             ),
@@ -1543,9 +1544,9 @@
             /* Input */
             React.createElement("div", {
               style: {
-                padding: "0.75rem 1rem", borderTop: "1px solid #1E2A3B",
+                padding: "0.75rem 1rem", borderTop: "1px solid #E5E5E0",
                 display: "flex", gap: "0.5rem", alignItems: "flex-end",
-                background: "#101827", flexShrink: 0,
+                background: "#FFFFFF", flexShrink: 0,
               }
             },
               React.createElement("textarea", {
@@ -1556,12 +1557,13 @@
                 placeholder: "Frage stellen...",
                 rows: 1,
                 style: {
-                  flex: 1, background: "#1A2332", border: "1px solid #263347",
-                  borderRadius: 12, padding: "0.6rem 0.85rem", color: "#F1F5F9",
+                  flex: 1, background: "#FFFFFF", border: "1px solid #E5E5E0",
+                  borderRadius: 12, padding: "0.6rem 0.85rem", color: "#1A1A1A",
                   fontSize: "0.82rem", resize: "none", lineHeight: 1.4,
                   maxHeight: 100, overflowY: "auto",
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                   scrollbarWidth: "thin",
+                  "::placeholder": { color: "#A0A0A0" },
                 }
               }),
               React.createElement("button", {
@@ -1570,9 +1572,10 @@
                 style: {
                   width: 38, height: 38, borderRadius: "50%", border: "none",
                   background: input.trim() && !isLoading
-                    ? "linear-gradient(135deg, #6366F1, #8B5CF6)"
-                    : "#1E2A3B",
-                  color: "#F1F5F9", cursor: input.trim() && !isLoading ? "pointer" : "not-allowed",
+                    ? "#14382E"
+                    : "#E5E5E0",
+                  color: input.trim() && !isLoading ? "#FFFFFF" : "#6B6B6B",
+                  cursor: input.trim() && !isLoading ? "pointer" : "not-allowed",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "0.9rem", transition: "background 0.2s", flexShrink: 0,
                 }
@@ -1593,25 +1596,33 @@
       useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [step]);
 
       return (
-        <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", color: C.text, position: "relative" }}>
+        <div style={{ background: C.cream, minHeight: "100vh", fontFamily: "'Plus Jakarta Sans', sans-serif", color: C.ink, position: "relative" }}>
           <BgDecor />
 
           {/* Sticky header for steps 1–4 */}
           {step > 0 && (
             <div style={{
               position: "fixed", top: 0, left: 0, right: 0,
-              background: `rgba(8,12,20,0.92)`, backdropFilter: "blur(16px)",
-              borderBottom: `1px solid ${C.border}`, padding: "0 2rem", height: 60,
+              background: `rgba(255,255,255,0.95)`, backdropFilter: "blur(16px)",
+              borderBottom: `1px solid ${C.rule}`, padding: "0 2rem", height: 60,
               display: "flex", alignItems: "center", justifyContent: "space-between",
               zIndex: 200, animation: "fadeIn 0.4s both",
             }}>
               <div onClick={() => { setStep(0); setProfileData(null); setResultData(null); setContractData(null); }}
-                style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.1rem", fontWeight: 800, cursor: "pointer", letterSpacing: "-0.02em" }}>
-                <span style={{ color: C.text }}>shield</span>
-                <span style={{ color: C.accentLight }}>creator</span>
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
+                <svg width={28} height={28} viewBox="0 0 52 52" fill="none">
+                  <circle cx={26} cy={26} r={24} stroke="#14382E" strokeWidth={2.5} />
+                  <circle cx={26} cy={26} r={24} stroke="#00C875" strokeWidth={2.5} strokeDasharray="45 107" strokeDashoffset={-14} />
+                  <path d="M26 14 L18 18 L18 28 C18 33 22 37 26 38 C30 37 34 33 34 28 L34 18 Z" fill="none" stroke="#00C875" strokeWidth={2} strokeLinejoin="round" />
+                  <polyline points="21,26 24,29 31,22" stroke="#00C875" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
+                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
+                  <span style={{ color: C.ink }}>shield</span>
+                  <span style={{ color: C.mint }}>creator</span>
+                </span>
               </div>
-              <div style={{ fontSize: "0.65rem", color: C.textDim, fontFamily: "'Space Mono', monospace" }}>
-                DEMO · v0.3 · HSG 2026
+              <div style={{ fontSize: "0.65rem", color: C.ink4, fontFamily: "'DM Mono', monospace" }}>
+                DEMO · v0.6 · HSG 2026
               </div>
             </div>
           )}
