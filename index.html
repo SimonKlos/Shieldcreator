@@ -46,6 +46,7 @@
     // ─────────────────────────────────────────────────────────
     const N8N_SCORING_URL  = "https://sklos.app.n8n.cloud/webhook/risk-scoring";
     const N8N_CONTRACT_URL = "https://sklos.app.n8n.cloud/webhook/962a436d-32a3-4dab-b7c5-683681c6b6a0";
+    const N8N_CHAT_URL     = "https://sklos.app.n8n.cloud/webhook/chatbot";
     // ─────────────────────────────────────────────────────────
 
     const C = {
@@ -1324,6 +1325,264 @@
     }
 
     // ─── APP ──────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────
+    // CHATBOT KOMPONENTE
+    // ─────────────────────────────────────────────────────────
+    function ChatBot() {
+      const [isOpen, setIsOpen]       = React.useState(false);
+      const [messages, setMessages]   = React.useState([
+        { role: "assistant", content: "Hi! Ich bin dein ShieldCreator Assistent 🛡️ Wie kann ich dir helfen?" }
+      ]);
+      const [input, setInput]         = React.useState("");
+      const [isLoading, setIsLoading] = React.useState(false);
+      const [hasError, setHasError]   = React.useState(false);
+      const messagesEndRef = React.useRef(null);
+      const inputRef       = React.useRef(null);
+
+      // Auto-scroll
+      React.useEffect(() => {
+        if (messagesEndRef.current) {
+          messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, [messages]);
+
+      // Focus input when opened
+      React.useEffect(() => {
+        if (isOpen && inputRef.current) inputRef.current.focus();
+      }, [isOpen]);
+
+      const sendMessage = async (overrideText) => {
+        const trimmed = (overrideText !== undefined ? overrideText : input).trim();
+        if (!trimmed || isLoading) return;
+
+        const userMessage = { role: "user", content: trimmed };
+        const newMessages = [...messages, userMessage];
+        setMessages(newMessages);
+        setInput("");
+        setIsLoading(true);
+        setHasError(false);
+
+        try {
+          const history = newMessages
+            .slice(1)   // Skip initial assistant greeting
+            .slice(-10); // Last 10 messages for context window
+
+          const res = await fetch(N8N_CHAT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: trimmed, history }),
+          });
+
+          if (!res.ok) throw new Error("Network response was not ok");
+          const data = await res.json();
+
+          setMessages(prev => [...prev, {
+            role: "assistant",
+            content: data.reply || "Entschuldigung, ich konnte keine Antwort generieren. Bitte kontaktiere support@shieldcreator.com"
+          }]);
+        } catch (err) {
+          setHasError(true);
+          setMessages(prev => [...prev, {
+            role: "assistant",
+            content: "Es tut mir leid, ich bin gerade nicht erreichbar. Bitte schreibe uns direkt an support@shieldcreator.com 📧"
+          }]);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      const handleKeyDown = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      };
+
+      // ── STYLES ────────────────────────────────────────────────────
+      const bubbleStyle = (role) => ({
+        maxWidth: "82%",
+        alignSelf: role === "user" ? "flex-end" : "flex-start",
+        background: role === "user"
+          ? "linear-gradient(135deg, #6366F1, #8B5CF6)"
+          : "#1A2332",
+        color: "#F1F5F9",
+        padding: "0.65rem 0.95rem",
+        borderRadius: role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+        fontSize: "0.82rem",
+        lineHeight: 1.5,
+        border: role === "user" ? "none" : "1px solid #1E2A3B",
+        wordBreak: "break-word",
+      });
+
+      return (
+        React.createElement(React.Fragment, null,
+          /* Floating Button */
+          React.createElement("button", {
+            onClick: () => setIsOpen(o => !o),
+            style: {
+              position: "fixed", bottom: 28, right: 28, zIndex: 9999,
+              width: 56, height: 56, borderRadius: "50%", border: "none",
+              background: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
+              boxShadow: "0 4px 24px rgba(99,102,241,0.45)",
+              cursor: "pointer", fontSize: "1.4rem",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s",
+              transform: isOpen ? "scale(0.92)" : "scale(1)",
+            },
+            title: "ShieldCreator Assistent",
+          }, isOpen ? "✕" : "🛡️"),
+
+          /* Chat Window */
+          isOpen && React.createElement("div", {
+            style: {
+              position: "fixed", bottom: 96, right: 28, zIndex: 9998,
+              width: 360, maxWidth: "calc(100vw - 56px)",
+              height: 520, maxHeight: "calc(100vh - 120px)",
+              background: "#0D1220",
+              border: "1px solid #1E2A3B",
+              borderRadius: 20,
+              boxShadow: "0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.12)",
+              display: "flex", flexDirection: "column",
+              animation: "fadeUp 0.3s cubic-bezier(0.22,1,0.36,1) both",
+              overflow: "hidden",
+            }
+          },
+            /* Header */
+            React.createElement("div", {
+              style: {
+                padding: "1rem 1.2rem", background: "#101827",
+                borderBottom: "1px solid #1E2A3B",
+                display: "flex", alignItems: "center", gap: "0.75rem",
+                flexShrink: 0,
+              }
+            },
+              React.createElement("div", {
+                style: {
+                  width: 36, height: 36, borderRadius: "50%",
+                  background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "1rem", flexShrink: 0,
+                }
+              }, "🛡️"),
+              React.createElement("div", null,
+                React.createElement("div", {
+                  style: { fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "0.9rem", letterSpacing: "-0.01em" }
+                },
+                  React.createElement("span", { style: { color: "#F1F5F9" } }, "shield"),
+                  React.createElement("span", { style: { color: "#818CF8" } }, "creator"),
+                  React.createElement("span", { style: { color: "#94A3B8", fontWeight: 400, fontSize: "0.7rem", marginLeft: 6 } }, "Assistent")
+                ),
+                React.createElement("div", {
+                  style: { fontSize: "0.65rem", color: "#10B981", display: "flex", alignItems: "center", gap: 4 }
+                },
+                  React.createElement("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "#10B981", display: "inline-block" } }),
+                  "Online"
+                )
+              )
+            ),
+
+            /* Messages */
+            React.createElement("div", {
+              style: {
+                flex: 1, overflowY: "auto", padding: "1rem",
+                display: "flex", flexDirection: "column", gap: "0.65rem",
+                scrollbarWidth: "thin", scrollbarColor: "#1E2A3B #0D1220",
+              }
+            },
+              messages.map((m, i) =>
+                React.createElement("div", { key: i, style: { display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" } },
+                  React.createElement("div", { style: bubbleStyle(m.role) },
+                    m.content,
+                    m.content.includes("support@shieldcreator.com") &&
+                      React.createElement("div", { style: { marginTop: "0.4rem" } },
+                        React.createElement("a", {
+                          href: "mailto:support@shieldcreator.com",
+                          style: { color: "#818CF8", fontSize: "0.75rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }
+                        }, "📧 support@shieldcreator.com")
+                      )
+                  )
+                )
+              ),
+              isLoading && React.createElement("div", { style: { display: "flex", justifyContent: "flex-start" } },
+                React.createElement("div", { style: { ...bubbleStyle("assistant"), display: "flex", gap: 4, alignItems: "center", padding: "0.75rem 1rem" } },
+                  [0,1,2].map(i =>
+                    React.createElement("span", {
+                      key: i,
+                      style: {
+                        width: 6, height: 6, borderRadius: "50%", background: "#6366F1",
+                        animation: "pulse 1.2s ease-in-out infinite",
+                        animationDelay: `${i * 0.2}s`,
+                      }
+                    })
+                  )
+                )
+              ),
+              React.createElement("div", { ref: messagesEndRef })
+            ),
+
+            /* Quick Suggestions (only at start) */
+            messages.length === 1 && React.createElement("div", {
+              style: { padding: "0 1rem 0.75rem", display: "flex", flexWrap: "wrap", gap: "0.4rem", flexShrink: 0 }
+            },
+              ["Was kostet Campaign Protection?", "Welche Produkte gibt es?", "Wie funktioniert der Schadensfall?"].map(q =>
+                React.createElement("button", {
+                  key: q,
+                  onClick: () => sendMessage(q),
+                  style: {
+                    background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)",
+                    color: "#818CF8", borderRadius: 20, padding: "0.3rem 0.75rem",
+                    fontSize: "0.7rem", cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                    transition: "background 0.2s",
+                  },
+                  onMouseEnter: e => e.currentTarget.style.background = "rgba(99,102,241,0.2)",
+                  onMouseLeave: e => e.currentTarget.style.background = "rgba(99,102,241,0.1)",
+                }, q)
+              )
+            ),
+
+            /* Input */
+            React.createElement("div", {
+              style: {
+                padding: "0.75rem 1rem", borderTop: "1px solid #1E2A3B",
+                display: "flex", gap: "0.5rem", alignItems: "flex-end",
+                background: "#101827", flexShrink: 0,
+              }
+            },
+              React.createElement("textarea", {
+                ref: inputRef,
+                value: input,
+                onChange: e => setInput(e.target.value),
+                onKeyDown: handleKeyDown,
+                placeholder: "Frage stellen...",
+                rows: 1,
+                style: {
+                  flex: 1, background: "#1A2332", border: "1px solid #263347",
+                  borderRadius: 12, padding: "0.6rem 0.85rem", color: "#F1F5F9",
+                  fontSize: "0.82rem", resize: "none", lineHeight: 1.4,
+                  maxHeight: 100, overflowY: "auto",
+                  fontFamily: "'DM Sans', sans-serif",
+                  scrollbarWidth: "thin",
+                }
+              }),
+              React.createElement("button", {
+                onClick: () => sendMessage(),
+                disabled: !input.trim() || isLoading,
+                style: {
+                  width: 38, height: 38, borderRadius: "50%", border: "none",
+                  background: input.trim() && !isLoading
+                    ? "linear-gradient(135deg, #6366F1, #8B5CF6)"
+                    : "#1E2A3B",
+                  color: "#F1F5F9", cursor: input.trim() && !isLoading ? "pointer" : "not-allowed",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "0.9rem", transition: "background 0.2s", flexShrink: 0,
+                }
+              }, "↑")
+            )
+          )
+        )
+      );
+    }
+
     function App() {
       const [step, setStep]               = useState(0);
       const [profileData, setProfileData] = useState(null);
@@ -1370,6 +1629,7 @@
               <ConfirmationStep contractData={contractData} profileData={profileData} />
             )}
           </div>
+          <ChatBot />
         </div>
       );
     }
