@@ -1847,12 +1847,34 @@
                         </div>
                       )}
                       <div style={{ fontSize: "0.95rem", fontWeight: 700, color: tier === key ? C.forest : C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t.label}</div>
-                      <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace", marginTop: "0.3rem" }}>
-                        {selectedProducts.length > 0
-                          ? `CHF ${(selectedProducts.reduce((s, id) => s + (priceMap[id]?.monthly || 0), 0) * (COVERAGE_CAPS[key]?.multiplier || 1)).toFixed(2)}`
-                          : `CHF ${t.monthly?.toFixed(2)}`}
-                      </div>
-                      <div style={{ fontSize: "0.62rem", color: C.ink4 }}>pro Monat</div>
+                      {(() => {
+                        const selTotal = selectedProducts.reduce((s, id) => s + (priceMap[id]?.monthly || 0), 0);
+                        const mult = COVERAGE_CAPS[key]?.multiplier || 1;
+                        const priceNoDiscount = selTotal * mult;
+                        const priceDiscounted = priceNoDiscount * 0.85;
+                        return (
+                          <>
+                            {selectedProducts.length > 0 && (
+                              <div style={{ fontSize: "0.65rem", color: C.ink4, fontFamily: "'DM Mono', monospace",
+                                textDecoration: "line-through", marginTop: "0.3rem", lineHeight: 1 }}>
+                                CHF {priceNoDiscount.toFixed(2)}
+                              </div>
+                            )}
+                            <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace",
+                              marginTop: selectedProducts.length > 0 ? "0.15rem" : "0.3rem" }}>
+                              {selectedProducts.length > 0
+                                ? `CHF ${priceDiscounted.toFixed(2)}`
+                                : `CHF ${t.monthly?.toFixed(2)}`}
+                            </div>
+                            {selectedProducts.length > 0 && (
+                              <div style={{ fontSize: "0.55rem", color: C.mint, fontWeight: 700, marginTop: "0.1rem", letterSpacing: "0.02em" }}>
+                                −15% Bundle-Rabatt
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
+                      <div style={{ fontSize: "0.62rem", color: C.ink4, marginTop: "0.1rem" }}>pro Monat</div>
                       {/* Coverage Caps */}
                       {cap && (
                         <div style={{ marginTop: "0.6rem", paddingTop: "0.5rem", borderTop: `1px solid ${C.rule}`, fontSize: "0.58rem", color: C.ink4, lineHeight: 1.7 }}>
