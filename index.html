@@ -82,22 +82,22 @@
 
     const INSURANCE_PRODUCTS = [
       {
-        id: "campaign", name: "Campaign Protection", subtitle: "Kampagnen-Ausfall",
-        icon: "🛡️", color: "#14382E", glow: "rgba(20,56,46,0.1)",
-        benefits: ["Absicherung bei Kampagnen-Stornierungen", "Automatische Schadenserfassung", "Auszahlung innerhalb 48h"],
-        from: "14.90",
-      },
-      {
         id: "reach", name: "Reach Protection", subtitle: "Reichweiten-Ausfall",
         icon: "📡", color: "#00C875", glow: "rgba(0,200,117,0.12)",
-        benefits: ["Schutz bei Algorithmus-Updates", "Parametrische Messung in Echtzeit", "Plattform-übergreifend"],
+        benefits: ["Schutz bei unverschuldeten Kontosperrungen & Hacks", "Abdeckung bei technischen Plattform-Fehlern & Copyright-Strikes", "Automatischer Account Recovery Service"],
+        from: "24.90",
+      },
+      {
+        id: "campaign", name: "Campaign Protection", subtitle: "Kampagnen-Ausfall",
+        icon: "🛡️", color: "#14382E", glow: "rgba(20,56,46,0.1)",
+        benefits: ["Ersatz von Sunk Costs bei kurzfristiger Brand-Stornierung", "Abdeckung bei Creator-Ausfall (Krankheit/Unfall)", "AI-Vertrags-Parsing für schnelle Schadensabwicklung"],
         from: "19.90",
       },
       {
         id: "content", name: "Content Liability+", subtitle: "Content-Risiko",
         icon: "⚖️", color: "#D4950A", glow: "rgba(212,149,10,0.12)",
-        benefits: ["Markenrecht & Copyright-Schutz", "Rechtsbeistand inklusive", "EU-weit gültig"],
-        from: "11.88",
+        benefits: ["Schutz bei unbeabsichtigten Urheberrechtsverletzungen", "Abdeckung bei Kennzeichnungsfehlern & DSGVO-Verstössen", "Präventiver AI Content-Scanner vor dem Upload"],
+        from: "14.90",
       },
     ];
 
@@ -110,18 +110,17 @@
           campaign: { score: 28, level: "Niedrig" },
           reach:    { score: 22, level: "Niedrig" },
           content:  { score: 45, level: "Mittel"  },
-          hack:     { score: 30, level: "Mittel"  },
         },
         pricing: {
           individual_products: {
-            campaign_protection: { monthly: 14.90 },
-            reach_protection:    { monthly: 19.90 },
-            content_liability:   { monthly: 11.88 },
+            campaign_protection: { monthly: 35.90 },
+            reach_protection:    { monthly: 42.30 },
+            content_liability:   { monthly: 33.93 },
           },
           tiers: {
-            basic:      { monthly: 42.01, yearly_monthly: 35.71, label: "Basic"      },
-            pro:        { monthly: 75.62, yearly_monthly: 64.28, label: "Pro"        },
-            enterprise: { monthly: 134.43,yearly_monthly:114.27, label: "Enterprise" },
+            basic:      { monthly: 100.92, yearly_monthly:  85.78, label: "Basic"      },
+            pro:        { monthly: 166.52, yearly_monthly: 141.54, label: "Pro"        },
+            enterprise: { monthly: 282.57, yearly_monthly: 240.18, label: "Enterprise" },
           },
         },
       },
@@ -133,18 +132,17 @@
           campaign: { score: 38, level: "Mittel" },
           reach:    { score: 30, level: "Mittel" },
           content:  { score: 62, level: "Hoch"   },
-          hack:     { score: 35, level: "Mittel" },
         },
         pricing: {
           individual_products: {
-            campaign_protection: { monthly: 22.34 },
-            reach_protection:    { monthly: 25.07 },
-            content_liability:   { monthly: 18.68 },
+            campaign_protection: { monthly: 42.89 },
+            reach_protection:    { monthly: 48.28 },
+            content_liability:   { monthly: 49.47 },
           },
           tiers: {
-            basic:      { monthly: 59.48, yearly_monthly: 50.56, label: "Basic"      },
-            pro:        { monthly: 107.07,yearly_monthly: 91.01, label: "Pro"        },
-            enterprise: { monthly: 190.34,yearly_monthly:161.79, label: "Enterprise" },
+            basic:      { monthly: 126.58, yearly_monthly: 107.59, label: "Basic"      },
+            pro:        { monthly: 208.86, yearly_monthly: 177.53, label: "Pro"        },
+            enterprise: { monthly: 354.42, yearly_monthly: 301.26, label: "Enterprise" },
           },
         },
       },
@@ -156,18 +154,17 @@
           campaign: { score: 35, level: "Mittel" },
           reach:    { score: 58, level: "Hoch"   },
           content:  { score: 22, level: "Niedrig"},
-          hack:     { score: 42, level: "Mittel" },
         },
         pricing: {
           individual_products: {
-            campaign_protection: { monthly: 30.77 },
-            reach_protection:    { monthly: 62.69 },
-            content_liability:   { monthly: 14.26 },
+            campaign_protection: { monthly: 63.10  },
+            reach_protection:    { monthly: 109.23 },
+            content_liability:   { monthly: 32.60  },
           },
           tiers: {
-            basic:      { monthly: 96.95, yearly_monthly: 82.41, label: "Basic"      },
-            pro:        { monthly: 174.51,yearly_monthly:148.33, label: "Pro"        },
-            enterprise: { monthly: 310.24,yearly_monthly:263.70, label: "Enterprise" },
+            basic:      { monthly: 184.44, yearly_monthly: 156.77, label: "Basic"      },
+            pro:        { monthly: 304.33, yearly_monthly: 258.68, label: "Pro"        },
+            enterprise: { monthly: 516.43, yearly_monthly: 438.97, label: "Enterprise" },
           },
         },
       },
@@ -409,9 +406,8 @@
     function LandingStats() {
       const [ref, inView] = useInView();
       const stats = [
-        { value: "45'000+",   label: "Creator im DACH",        icon: "👥" },
         { value: "< 3 Min",   label: "bis zur Police",          icon: "⚡" },
-        { value: "CHF 9.90",  label: "ab / Monat",              icon: "💎" },
+        { value: "CHF 14.90", label: "ab / Monat",              icon: "💎" },
         { value: "FINMA",     label: "Sandbox zertifiziert",    icon: "🏛️" },
       ];
       return (
@@ -584,6 +580,83 @@
       );
     }
 
+    // ─── FAQ ──────────────────────────────────────────────────
+    function LandingFAQ() {
+      const [ref, inView] = useInView(0.1);
+      const [openIndex, setOpenIndex] = useState(null);
+      const faqs = [
+        {
+          q: "Wie schnell bin ich versichert?",
+          a: "Nach Abschluss ist deine Police sofort aktiv. Der gesamte Prozess von der KI-Analyse bis zur Aktivierung dauert unter 3 Minuten — ohne Papierkram, ohne Wartezeit.",
+        },
+        {
+          q: "Was kostet eine Versicherung bei shieldcreator?",
+          a: "Die Prämien beginnen ab CHF 14.90/Monat und werden individuell anhand deines Risikoprofils (Follower-Anzahl, Plattform, Nische, Engagement) berechnet. Du zahlst nur, was deinem tatsächlichen Risiko entspricht.",
+        },
+        {
+          q: "Welche Plattformen werden abgedeckt?",
+          a: "Aktuell werden Instagram, YouTube und TikTok vollständig unterstützt. Weitere Plattformen (z.B. LinkedIn Creator, Twitch) befinden sich in der Entwicklung und werden laufend hinzugefügt.",
+        },
+        {
+          q: "Wie melde ich einen Schadenfall?",
+          a: "Über dein Dashboard oder direkt per E-Mail an support@shieldcreator.com. Bei parametrischen Produkten wie Reach Protection erkennt unser System Schäden (z.B. Kontosperrungen) automatisch via API und startet den Prozess ohne manuellen Aufwand.",
+        },
+        {
+          q: "Kann ich monatlich kündigen?",
+          a: "Ja — alle Tarife sind ohne Mindestlaufzeit monatlich kündbar. Bei Jahreszahlung (mit 15% Rabatt) gilt eine Kündigungsfrist von 30 Tagen zum Ablauf der Periode.",
+        },
+      ];
+      return (
+        <section style={{ padding: "5rem 2rem", background: C.white }}>
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <div ref={ref} style={{ textAlign: "center", marginBottom: "3rem",
+              opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(16px)",
+              transition: "all 0.6s cubic-bezier(0.22,1,0.36,1)" }}>
+              <div style={{ fontSize: "0.72rem", fontFamily: "'DM Mono', monospace", color: C.forest,
+                letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.75rem" }}>FAQ</div>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
+                letterSpacing: "-0.03em", color: C.ink }}>Häufige Fragen</h2>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+              {faqs.map((faq, i) => {
+                const isOpen = openIndex === i;
+                return (
+                  <div key={i} onClick={() => setOpenIndex(isOpen ? null : i)} style={{
+                    background: C.white, border: `1px solid ${isOpen ? "rgba(0,200,117,0.4)" : C.rule}`,
+                    borderRadius: 14, overflow: "hidden", cursor: "pointer",
+                    boxShadow: isOpen ? "0 4px 24px rgba(0,200,117,0.08)" : "none",
+                    transition: "border-color 0.25s, box-shadow 0.25s",
+                    opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(12px)",
+                    transitionDelay: `${0.05 + i * 0.07}s`,
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+                      padding: "1.1rem 1.4rem" }}>
+                      <span style={{ fontSize: "0.92rem", fontWeight: 600, color: isOpen ? C.forest : C.ink,
+                        fontFamily: "'Plus Jakarta Sans', sans-serif", transition: "color 0.2s" }}>{faq.q}</span>
+                      <span style={{
+                        width: 24, height: 24, borderRadius: "50%",
+                        background: isOpen ? C.forest : C.rule,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "0.75rem", color: isOpen ? C.white : C.ink4, flexShrink: 0, marginLeft: "1rem",
+                        transition: "background 0.25s, color 0.25s, transform 0.25s",
+                        transform: isOpen ? "rotate(45deg)" : "none",
+                      }}>+</span>
+                    </div>
+                    {isOpen && (
+                      <div style={{ padding: "0 1.4rem 1.1rem", animation: "fadeUp 0.25s both" }}>
+                        <div style={{ height: 1, background: C.rule, marginBottom: "0.9rem" }} />
+                        <p style={{ fontSize: "0.85rem", color: C.ink3, lineHeight: 1.7, margin: 0 }}>{faq.a}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     // ─── FINAL CTA ────────────────────────────────────────────
     function LandingFinalCTA({ onStart }) {
       const [ref, inView] = useInView(0.2);
@@ -637,6 +710,7 @@
           <LandingHowItWorks />
           <LandingProducts   onStart={onNext} />
           <LandingTrust  />
+          <LandingFAQ    />
           <LandingFinalCTA   onStart={onNext} />
         </div>
       );
@@ -679,6 +753,8 @@
       const [engagement, setEngagement] = useState("");
       const [niche, setNiche]         = useState("");
       const [revenue, setRevenue]     = useState("");
+      const [campaignName, setCampaignName] = useState("");
+      const [campaignValue, setCampaignValue] = useState("");
       useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
 
       const platforms = [
@@ -703,6 +779,8 @@
           has_verified_badge:  (parseInt(followers) || 0) > 100000,
           account_age_years:   3,
           email,
+          campaign_name:       campaignName || null,
+          campaign_value:      parseInt(campaignValue) || 0,
         });
       };
 
@@ -785,6 +863,24 @@
                 <label style={labelStyle}>Monatsumsatz (CHF)</label>
                 <input style={inputStyle} type="number" placeholder="z.B. 5000" value={revenue} onChange={e => setRevenue(e.target.value)}
                   onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
+              </div>
+            </div>
+            {/* Campaign section */}
+            <div style={{ background: C.mintBg, border: `1px solid rgba(0,200,117,0.25)`, borderRadius: 12, padding: "1rem 1.25rem" }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.forest, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.85rem" }}>
+                🛡️ GEPLANTE KAMPAGNE (OPTIONAL)
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                <div>
+                  <label style={labelStyle}>Kampagnenname</label>
+                  <input style={inputStyle} placeholder="z.B. H&M Winterkollektion" value={campaignName} onChange={e => setCampaignName(e.target.value)}
+                    onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Kampagnenwert (CHF)</label>
+                  <input style={inputStyle} type="number" placeholder="z.B. 8500" value={campaignValue} onChange={e => setCampaignValue(e.target.value)}
+                    onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
+                </div>
               </div>
             </div>
             <button onClick={handleSubmit} disabled={!canSubmit} style={{
@@ -974,6 +1070,11 @@
       const tierData = tiers[tier] || tiers.pro;
       const toggleProduct = (id) => setSelectedProducts(prev => prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]);
       const getRiskColor = (score) => score < 30 ? C.mint : score < 50 ? C.amber : C.red;
+      const campaignAddon = data.pricing?.campaign_addon?.current_campaign;
+      const localCampaignPremium = (profileData.campaign_value > 0)
+        ? Math.max(9.90, Math.min(990, profileData.campaign_value * 0.03 * 1.1))
+        : 0;
+      const hasCampaign = campaignAddon || (profileData.campaign_value > 0);
       const getRiskLabel = (score) => score < 30 ? "Niedrig" : score < 50 ? "Mittel" : "Hoch";
       const rd = data.risk_details || {};
 
@@ -998,6 +1099,9 @@
           content_price:       prices.content_liability?.monthly || 0,
           bundle_discount:     data.pricing?.bundle_discount || "10%",
           recommendation:      data.recommendation,
+          campaign_name:       profileData.campaign_name || null,
+          campaign_value:      profileData.campaign_value || 0,
+          campaign_premium:    campaignAddon?.premium || localCampaignPremium || 0,
         };
         try {
           const response = await fetch(N8N_CONTRACT_URL, {
@@ -1144,6 +1248,29 @@
               </div>
             </div>
 
+            {/* Campaign addon box */}
+            {hasCampaign && (
+              <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
+                <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.forest, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.85rem" }}>
+                  🛡️ KAMPAGNEN-ZUSCHLAG
+                </div>
+                {profileData.campaign_name && (
+                  <div style={{ fontSize: "0.85rem", fontWeight: 600, color: C.ink, marginBottom: "0.5rem" }}>
+                    {profileData.campaign_name}
+                  </div>
+                )}
+                <div style={{ fontSize: "0.8rem", color: C.ink3, fontFamily: "'DM Mono', monospace", marginBottom: "0.4rem" }}>
+                  {campaignAddon
+                    ? `CHF ${profileData.campaign_value?.toLocaleString("de-CH")} × ${campaignAddon.rate_applied} × Risiko = CHF ${campaignAddon.premium?.toFixed(2)} (einmalig)`
+                    : `CHF ${(profileData.campaign_value || 0).toLocaleString("de-CH")} × 3% × 1.10 Risiko = CHF ${localCampaignPremium.toFixed(2)} (einmalig)`
+                  }
+                </div>
+                <div style={{ fontSize: "0.72rem", color: C.ink4 }}>
+                  {campaignAddon?.coverage_note || "Deckung pro Kampagne gemäss gewähltem Tarif"}
+                </div>
+              </div>
+            )}
+
             {/* CTA / Summary */}
             <div style={{
               background: `linear-gradient(135deg, rgba(0,200,117,0.06) 0%, ${C.white} 100%)`,
@@ -1250,6 +1377,8 @@
                 ["Tarif",          contractData.selected_tier_label, C.forest],
                 ["Handle",         contractData.handle,          C.ink],
                 ["Plattform",      contractData.platform,        C.ink],
+                ...(contractData.campaign_name ? [["Kampagne", contractData.campaign_name, C.ink]] : []),
+                ...(contractData.campaign_premium > 0 ? [["Kampagnen-Zuschlag", `CHF ${contractData.campaign_premium.toFixed(2)}`, C.mint]] : []),
               ].map(([label, value, color]) => (
                 <div key={label} style={{ display: "flex", justifyContent: "space-between", padding: "0.6rem 0", borderBottom: `1px solid ${C.rule}` }}>
                   <span style={{ color: C.ink3, fontSize: "0.85rem" }}>{label}</span>
@@ -1622,7 +1751,7 @@
                 </span>
               </div>
               <div style={{ fontSize: "0.65rem", color: C.ink4, fontFamily: "'DM Mono', monospace" }}>
-                DEMO · v0.6 · HSG 2026
+                DEMO · v0.7 · HSG 2026
               </div>
             </div>
           )}
