@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>shieldcreator — Versicherungsplattform für Influencer</title>
+  <title>shieldcreator - Versicherungsplattform für Influencer</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2314382E'/><path d='M16 5 L8 9 L8 18 C8 23 12 27 16 28 C20 27 24 23 24 18 L24 9 Z' fill='none' stroke='%2300C875' stroke-width='2' stroke-linejoin='round'/><polyline points='12,17 15,20 21,14' stroke='%2300C875' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
@@ -226,12 +226,37 @@
     // ─── PLATTFORM-LOGO HELPER ────────────────────────────────
     function PlatformLogo({ platform, size = 20 }) {
       if (platform === "instagram") {
-        return <img src="brand assets/Instagram logos.png" alt="Instagram" style={{ width: size, height: size, objectFit: "contain", borderRadius: 4 }} />;
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+                <stop offset="0%" stopColor="#fdf497"/>
+                <stop offset="5%" stopColor="#fdf497"/>
+                <stop offset="45%" stopColor="#fd5949"/>
+                <stop offset="60%" stopColor="#d6249f"/>
+                <stop offset="90%" stopColor="#285AEB"/>
+              </radialGradient>
+            </defs>
+            <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-grad)"/>
+            <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.8" fill="none"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="white"/>
+          </svg>
+        );
       }
       if (platform === "youtube") {
-        return <img src="brand assets/Youtube Logo.png" alt="YouTube" style={{ width: size, height: size, objectFit: "contain" }} />;
+        return (
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="5" width="22" height="14" rx="4" fill="#FF0000"/>
+            <polygon points="10,8.5 10,15.5 16,12" fill="white"/>
+          </svg>
+        );
       }
-      return <span style={{ fontSize: size * 0.9 + "px" }}>🎵</span>;
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="5" fill="#010101"/>
+          <path d="M12.5 5.5h2.8a4.2 4.2 0 0 0 4.2 4.2v2.8a7 7 0 0 1-4.2-1.4V16a5.25 5.25 0 1 1-5.25-5.25h.45v2.8a2.45 2.45 0 1 0 2 2.45V5.5z" fill="white"/>
+        </svg>
+      );
     }
 
     // ─── NAV ──────────────────────────────────────────────────
@@ -265,11 +290,11 @@
               <span style={{ color: "#00C875" }}>creator</span>
             </span>
           </div>
-          {/* Menü-Reihenfolge entspricht der Seitenreihenfolge: Wie's funktioniert → Produkte → Angebot erstellen */}
+          {/* Menü-Reihenfolge entspricht der Seitenreihenfolge: Wie's funktioniert → Produkte → Risk Intelligence Dashboard → FAQ → Angebot erstellen */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-            {["Wie's funktioniert", "Produkte", "Angebot erstellen"].map(link => (
+            {["Wie's funktioniert", "Produkte", "Risk Intelligence Dashboard", "FAQ", "Angebot erstellen"].map(link => (
               <a key={link}
-                href={`#${link === "Produkte" ? "products" : link === "Wie's funktioniert" ? "how" : "pricing"}`}
+                href={`#${link === "Produkte" ? "products" : link === "Wie's funktioniert" ? "how" : link === "Risk Intelligence Dashboard" ? "dashboard" : link === "FAQ" ? "faq" : "pricing"}`}
                 className="nav-link"
                 style={{ color: logoOnDark ? "rgba(255,255,255,0.75)" : C.ink3, fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.85rem",
                   textDecoration: "none", borderRadius: 8, transition: "color 0.2s" }}>
@@ -356,7 +381,7 @@
             transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.25s",
             marginBottom: "2.5rem",
           }}>
-            Parametrischer Schutz gegen Kampagnen-Ausfall, Reichweiten-Einbrüche und Content-Risiken — vollständig digital, sofort aktiv.
+            Parametrischer Schutz gegen Kampagnen-Ausfall, Reichweiten-Einbrüche und Content-Risiken - vollständig digital, sofort aktiv.
           </p>
 
           {/* CTAs */}
@@ -464,7 +489,7 @@
       const steps = [
         { num: "01", icon: "📝", title: "Profil eingeben", desc: "Plattform, Handle und Follower-Anzahl angeben. Dauert unter 60 Sekunden." },
         { num: "02", icon: "🤖", title: "KI-Analyse",      desc: "Unsere KI bewertet dein Risikoprofil in Echtzeit anhand tausender Datenpunkte." },
-        { num: "03", icon: "🛡️", title: "Sofortschutz",   desc: "Tarif wählen, Vertrag digital abschliessen — Police sofort per E-Mail." },
+        { num: "03", icon: "🛡️", title: "Sofortschutz",   desc: "Tarif wählen, Vertrag digital abschliessen - Police sofort per E-Mail." },
       ];
       return (
         <section id="how" style={{ padding: "5rem 2rem", position: "relative", background: C.cream }}>
@@ -597,7 +622,7 @@
       const features = [
         {
           title: "Real-Time Risk Audit",
-          desc: "24/7-Monitoring deiner Performance-Metriken — keine statischen Jahresfragebögen",
+          desc: "24/7-Monitoring deiner Performance-Metriken - keine statischen Jahresfragebögen",
           icon: (
             <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={C.mint} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
@@ -606,7 +631,7 @@
         },
         {
           title: "Transparente Prämien",
-          desc: "Sieh genau, welche Aktionen deinen Score — und damit deine Prämie — senken",
+          desc: "Sieh genau, welche Aktionen deinen Score - und damit deine Prämie - senken",
           icon: (
             <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={C.mint} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <circle cx={12} cy={12} r={9} />
@@ -666,7 +691,7 @@
       };
 
       return (
-        <section style={{ background: C.cream, padding: "6rem 2rem 0" }}>
+        <section id="dashboard" style={{ background: C.cream, padding: "6rem 2rem 0" }}>
 
           {/* ── PART 1: Feature Explanation ── */}
           <div ref={headerRef} style={{
@@ -699,13 +724,13 @@
               fontSize: "1rem", color: C.ink3, lineHeight: 1.75,
               maxWidth: 600, margin: "0 auto 3rem", fontWeight: 400,
             }}>
-              Jeder versicherte Creator erhält Zugang zu seinem persönlichen Risk Intelligence Dashboard — powered by denselben KI-Scores, die auch deine Prämie berechnen. Kein Raten. Volle Transparenz.
+              Jeder versicherte Creator erhält Zugang zu seinem persönlichen Risk Intelligence Dashboard - powered by denselben KI-Scores, die auch deine Prämie berechnen. Volle Transparenz.
             </p>
 
-            {/* Feature 2×2 grid */}
+            {/* Feature 4-column row */}
             <div style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gridTemplateColumns: "repeat(4, 1fr)",
               gap: "1rem", marginBottom: "2.5rem",
             }}>
               {features.map((f, i) => (
@@ -1053,18 +1078,6 @@
                     Aktuelle Einsparung bei Score-Ziel 25: −CHF 12.40/Mt.
                   </div>
                 </div>
-                <button onClick={onStart} style={{
-                  background: C.mint, color: C.forest,
-                  border: "none", padding: "0.5rem 1.1rem",
-                  borderRadius: 100, fontSize: "0.78rem", fontWeight: 700,
-                  cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  whiteSpace: "nowrap", flexShrink: 0,
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = `0 6px 20px rgba(0,200,117,0.4)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
-                  Score verbessern →
-                </button>
               </div>
             </div>
           </div>
@@ -1150,7 +1163,7 @@
       const faqs = [
         {
           q: "Wie schnell bin ich versichert?",
-          a: "Nach Abschluss ist deine Police sofort aktiv. Der gesamte Prozess von der KI-Analyse bis zur Aktivierung dauert unter 3 Minuten — ohne Papierkram, ohne Wartezeit.",
+          a: "Nach Abschluss ist deine Police sofort aktiv. Der gesamte Prozess von der KI-Analyse bis zur Aktivierung dauert unter 3 Minuten - ohne Papierkram, ohne Wartezeit.",
         },
         {
           q: "Was kostet eine Versicherung bei shieldcreator?",
@@ -1166,11 +1179,11 @@
         },
         {
           q: "Kann ich monatlich kündigen?",
-          a: "Ja — alle Tarife sind ohne Mindestlaufzeit monatlich kündbar. Bei Jahreszahlung (mit 15% Rabatt) gilt eine Kündigungsfrist von 30 Tagen zum Ablauf der Periode.",
+          a: "Ja - alle Tarife sind ohne Mindestlaufzeit monatlich kündbar. Bei Jahreszahlung (mit 15% Rabatt) gilt eine Kündigungsfrist von 30 Tagen zum Ablauf der Periode.",
         },
       ];
       return (
-        <section style={{ padding: "5rem 2rem", background: C.white }}>
+        <section id="faq" style={{ padding: "5rem 2rem", background: C.white }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <div ref={ref} style={{ textAlign: "center", marginBottom: "3rem",
               opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(16px)",
@@ -1238,7 +1251,7 @@
               fontSize: "clamp(1.6rem, 3vw, 2.4rem)", letterSpacing: "-0.03em",
               color: C.ink, marginBottom: "0.75rem" }}>Bereit für deinen Schutz?</h2>
             <p style={{ fontSize: "1rem", color: C.ink3, lineHeight: 1.7, marginBottom: "2rem", maxWidth: 460, margin: "0 auto 2rem" }}>
-              Analysiere dein Risikoprofil in unter 3 Minuten und erhalte deine persönliche Police — ohne Papierkram.
+              Analysiere dein Risikoprofil in unter 3 Minuten und erhalte deine persönliche Police - ohne Papierkram.
             </p>
             <button onClick={onStart} style={{
               background: C.forest, color: C.white, border: "none",
@@ -1272,8 +1285,8 @@
           <LandingStats  />
           <LandingHowItWorks />
           <LandingProducts   onStart={onNext} />
-          <RiskDashboardSection onStart={onNext} />
           <LandingTrust  />
+          <RiskDashboardSection onStart={onNext} />
           <LandingFAQ    />
           <LandingFinalCTA   onStart={onNext} />
         </div>
@@ -1439,7 +1452,7 @@
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 <div>
                   <label style={labelStyle}>Kampagnenname</label>
-                  <input style={inputStyle} placeholder="z.B. H&M Winterkollektion" value={campaignName} onChange={e => setCampaignName(e.target.value)}
+                  <input style={inputStyle} placeholder="z.B. Kampagnenname" value={campaignName} onChange={e => setCampaignName(e.target.value)}
                     onFocus={e => e.target.style.borderColor = C.forest} onBlur={e => e.target.style.borderColor = C.rule} />
                 </div>
                 <div>
@@ -1759,7 +1772,7 @@
                 Versicherungsprodukte wählen
               </div>
               <div style={{ fontSize: "0.72rem", color: C.ink4, marginBottom: "1rem" }}>
-                Wähle die Produkte, die du absichern möchtest — der Preis passt sich automatisch an.
+                Wähle die Produkte, die du absichern möchtest - der Preis passt sich automatisch an.
               </div>
               <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                 {INSURANCE_PRODUCTS.map(p => {
@@ -1791,11 +1804,11 @@
                         }}>{selected && "✓"}</div>
                       </div>
                       <div style={{ marginTop: "0.6rem", fontSize: "0.72rem", color: C.ink3, fontFamily: "'DM Mono', monospace" }}>
-                        CHF {price?.monthly?.toFixed(2) || "—"}/Mt. (Einzelpreis)
+                        CHF {(price?.monthly * (cap?.multiplier || 1))?.toFixed(2) || "-"}/Mt. (Einzelpreis)
                       </div>
                       {/* Coverage Cap pro Produkt */}
                       <div style={{ marginTop: "0.3rem", fontSize: "0.62rem", color: C.ink4, borderTop: `1px solid ${C.rule}`, paddingTop: "0.3rem" }}>
-                        Deckung: {cap?.perClaim || "—"} / Schaden
+                        Deckung: {cap?.perClaim || "-"} / Schaden
                         {p.id === "campaign" && cap && (
                           <span> · {cap.campaign} / Kampagne</span>
                         )}
@@ -1836,7 +1849,7 @@
                       <div style={{ fontSize: "0.95rem", fontWeight: 700, color: tier === key ? C.forest : C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t.label}</div>
                       <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace", marginTop: "0.3rem" }}>
                         {selectedProducts.length > 0
-                          ? `CHF ${(selectedProducts.reduce((s, id) => s + (priceMap[id]?.monthly || 0), 0) * (totalAllProducts > 0 ? t.monthly / totalAllProducts : 1)).toFixed(2)}`
+                          ? `CHF ${(selectedProducts.reduce((s, id) => s + (priceMap[id]?.monthly || 0), 0) * (COVERAGE_CAPS[key]?.multiplier || 1)).toFixed(2)}`
                           : `CHF ${t.monthly?.toFixed(2)}`}
                       </div>
                       <div style={{ fontSize: "0.62rem", color: C.ink4 }}>pro Monat</div>
@@ -1873,7 +1886,7 @@
                   }
                 </div>
                 <div style={{ fontSize: "0.72rem", color: C.ink4 }}>
-                  {campaignAddon?.coverage_note || `Kampagnendeckung: ${COVERAGE_CAPS[tier]?.campaign || "—"} · Deckung pro Kampagne gemäss gewähltem Tarif`}
+                  {campaignAddon?.coverage_note || `Kampagnendeckung: ${COVERAGE_CAPS[tier]?.campaign || "-"} · Deckung pro Kampagne gemäss gewähltem Tarif`}
                 </div>
               </div>
             )}
@@ -1893,7 +1906,7 @@
                 color: selectedProducts.length === 0 ? C.ink4 : C.forest, letterSpacing: "-0.03em",
                 transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
               }}>
-                {selectedProducts.length === 0 ? "CHF —" : `CHF ${dynamicMonthly.toFixed(2)}`}
+                {selectedProducts.length === 0 ? "CHF -" : `CHF ${dynamicMonthly.toFixed(2)}`}
               </div>
               <div style={{ fontSize: "0.8rem", color: C.ink3, marginBottom: "0.4rem" }}>
                 pro Monat · {tierData.label} · {selectedProducts.length} Produkt{selectedProducts.length !== 1 ? "e" : ""} gewählt
@@ -2391,9 +2404,6 @@
                   <span style={{ color: C.ink }}>shield</span>
                   <span style={{ color: C.mint }}>creator</span>
                 </span>
-              </div>
-              <div style={{ fontSize: "0.65rem", color: C.ink4, fontFamily: "'DM Mono', monospace" }}>
-                DEMO · v0.8 · HSG 2026
               </div>
             </div>
           )}
