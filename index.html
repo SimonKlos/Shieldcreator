@@ -27,6 +27,7 @@
     @keyframes float    { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-10px); } }
     @keyframes glow     { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
     @keyframes shimmer  { from { background-position: -200% center; } to { background-position: 200% center; } }
+    @keyframes chatRing { 0% { transform:scale(1); opacity:0.8; } 100% { transform:scale(2.2); opacity:0; } }
 
     .nav-link:hover { color: #14382E !important; }
     .product-card:hover { transform: translateY(-6px) !important; }
@@ -170,6 +171,14 @@
       },
     };
 
+    // ─── COVERAGE CAPS (Quelle: Brand Assets) ────────────────
+    // Pro Schadenfall / Jahres-Aggregat / Pro Kampagne · Keine Selbstbeteiligung
+    const COVERAGE_CAPS = {
+      basic:      { perClaim: "CHF 50'000",    annual: "CHF 100'000",   campaign: "CHF 10'000",  multiplier: 1.00 },
+      pro:        { perClaim: "CHF 250'000",   annual: "CHF 500'000",   campaign: "CHF 50'000",  multiplier: 1.65 },
+      enterprise: { perClaim: "CHF 1'000'000", annual: "CHF 2'000'000", campaign: "CHF 200'000", multiplier: 2.80 },
+    };
+
     // ─── HOOKS ────────────────────────────────────────────────
     function useCounter(target, duration = 1500, active = true) {
       const [value, setValue] = useState(0);
@@ -205,7 +214,6 @@
     function BgDecor() {
       return (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
-          {/* Subtle grid on cream background */}
           <div style={{
             position: "absolute", inset: 0,
             backgroundImage: `linear-gradient(${C.rule}88 1px, transparent 1px), linear-gradient(90deg, ${C.rule}88 1px, transparent 1px)`,
@@ -213,6 +221,17 @@
           }} />
         </div>
       );
+    }
+
+    // ─── PLATTFORM-LOGO HELPER ────────────────────────────────
+    function PlatformLogo({ platform, size = 20 }) {
+      if (platform === "instagram") {
+        return <img src="brand assets/Instagram logos.png" alt="Instagram" style={{ width: size, height: size, objectFit: "contain", borderRadius: 4 }} />;
+      }
+      if (platform === "youtube") {
+        return <img src="brand assets/Youtube Logo.png" alt="YouTube" style={{ width: size, height: size, objectFit: "contain" }} />;
+      }
+      return <span style={{ fontSize: size * 0.9 + "px" }}>🎵</span>;
     }
 
     // ─── NAV ──────────────────────────────────────────────────
@@ -246,9 +265,11 @@
               <span style={{ color: "#00C875" }}>creator</span>
             </span>
           </div>
+          {/* Menü-Reihenfolge entspricht der Seitenreihenfolge: Wie's funktioniert → Produkte → Angebot erstellen */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-            {["Produkte", "Wie's funktioniert", "Preise"].map(link => (
-              <a key={link} href={`#${link === "Produkte" ? "products" : link === "Wie's funktioniert" ? "how" : "pricing"}`}
+            {["Wie's funktioniert", "Produkte", "Angebot erstellen"].map(link => (
+              <a key={link}
+                href={`#${link === "Produkte" ? "products" : link === "Wie's funktioniert" ? "how" : "pricing"}`}
                 className="nav-link"
                 style={{ color: logoOnDark ? "rgba(255,255,255,0.75)" : C.ink3, fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.85rem",
                   textDecoration: "none", borderRadius: 8, transition: "color 0.2s" }}>
@@ -275,9 +296,9 @@
       const [visible, setVisible] = useState(false);
       useEffect(() => { setTimeout(() => setVisible(true), 80); }, []);
       const platforms = [
-        { name: "Instagram", icon: "📸", color: "#E1306C" },
-        { name: "YouTube",   icon: "▶️",  color: "#FF0000" },
-        { name: "TikTok",    icon: "🎵",  color: "#00F2EA" },
+        { name: "Instagram", platform: "instagram", color: "#E1306C" },
+        { name: "YouTube",   platform: "youtube",   color: "#FF0000" },
+        { name: "TikTok",    platform: "tiktok",    color: "#00F2EA" },
       ];
       return (
         <section style={{
@@ -370,7 +391,7 @@
             </a>
           </div>
 
-          {/* Platform badges */}
+          {/* Platform badges mit echten Logos */}
           <div style={{
             display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap",
             opacity: visible ? 1 : 0, transition: "opacity 0.7s 0.5s",
@@ -382,7 +403,7 @@
                 borderRadius: 10, padding: "0.55rem 1rem",
                 animation: visible ? `float ${3 + i * 0.7}s ease-in-out infinite ${i * 0.4}s` : "none",
               }}>
-                <span style={{ fontSize: "1.1rem" }}>{p.icon}</span>
+                <PlatformLogo platform={p.platform} size={20} />
                 <span style={{ fontSize: "0.8rem", fontWeight: 600, color: C.white }}>{p.name}</span>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: p.color, opacity: 0.8 }} />
               </div>
@@ -457,10 +478,9 @@
                 letterSpacing: "-0.03em", color: C.ink }}>In 3 Schritten zur Police</h2>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", position: "relative" }}>
-              {/* Connector line */}
               <div style={{ position: "absolute", top: "3rem", left: "16.67%", right: "16.67%", height: 1,
                 background: `linear-gradient(to right, transparent, ${C.rule}, ${C.rule}, transparent)`,
-                display: "none" /* hidden on mobile */ }} />
+                display: "none" }} />
               {steps.map((s, i) => (
                 <div key={i} style={{
                   background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16,
@@ -468,7 +488,6 @@
                   opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(20px)",
                   transition: `all 0.7s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.15}s`,
                 }}>
-                  {/* Step number watermark */}
                   <div style={{ position: "absolute", top: -8, right: 12, fontFamily: "'Plus Jakarta Sans', sans-serif",
                     fontSize: "4rem", fontWeight: 800, color: C.rule, lineHeight: 1, userSelect: "none" }}>
                     {s.num}
@@ -535,6 +554,550 @@
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ─── RISK INTELLIGENCE DASHBOARD ─────────────────────────
+    function RiskDashboardSection({ onStart }) {
+      const [headerRef, headerInView] = useInView(0.1);
+      const [dashRef,   dashInView]   = useInView(0.05);
+      const [barsRef,   barsInView]   = useInView(0.15);
+      const overallScore = useCounter(38, 1200, dashInView);
+      const [gaugePos, setGaugePos] = useState(0);
+
+      useEffect(() => {
+        if (dashInView) {
+          const t = setTimeout(() => setGaugePos(38), 180);
+          return () => clearTimeout(t);
+        }
+      }, [dashInView]);
+
+      const AMBER  = "#F59E0B";
+      const DANGER = "#EF4444";
+      const SAFE   = "#00C875";
+
+      function scoreColor(s) {
+        if (s <= 35) return SAFE;
+        if (s <= 60) return AMBER;
+        return DANGER;
+      }
+      function levelColor(lvl) {
+        if (lvl === "NIEDRIG") return SAFE;
+        if (lvl === "MITTEL")  return AMBER;
+        return DANGER;
+      }
+      function levelBg(lvl) {
+        if (lvl === "NIEDRIG") return "rgba(0,200,117,0.1)";
+        if (lvl === "MITTEL")  return "rgba(245,158,11,0.1)";
+        return "rgba(239,68,68,0.1)";
+      }
+
+      const features = [
+        {
+          title: "Real-Time Risk Audit",
+          desc: "24/7-Monitoring deiner Performance-Metriken — keine statischen Jahresfragebögen",
+          icon: (
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={C.mint} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          ),
+        },
+        {
+          title: "Transparente Prämien",
+          desc: "Sieh genau, welche Aktionen deinen Score — und damit deine Prämie — senken",
+          icon: (
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={C.mint} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <circle cx={12} cy={12} r={9} />
+              <path d="M9 9h1.5a1.5 1.5 0 1 1 0 3H9m0 0h2.25A1.5 1.5 0 0 1 12.75 15H9m0-3v3" />
+              <line x1={12} y1={6} x2={12} y2={7.5} />
+              <line x1={12} y1={16.5} x2={12} y2={18} />
+              <polyline points="15 7 17 5" />
+            </svg>
+          ),
+        },
+        {
+          title: "AI Compliance Shield",
+          desc: "Präventiver Scan von Skripten & Videos vor dem Upload auf rechtliche Risiken",
+          icon: (
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={C.mint} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 3 L4 7 L4 13 C4 17.5 7.5 21.5 12 23 C16.5 21.5 20 17.5 20 13 L20 7 Z" />
+              <polyline points="9 12 11 14 15 10" />
+            </svg>
+          ),
+        },
+        {
+          title: "Diversification Radar",
+          desc: "Frühwarnsystem für Plattform-Abhängigkeiten und Klumpenrisiken",
+          icon: (
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke={C.mint} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <circle cx={12} cy={12} r={2} />
+              <path d="M4.93 4.93a10 10 0 0 0 0 14.14" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              <path d="M7.76 7.76a6 6 0 0 0 0 8.49" />
+              <path d="M16.24 7.76a6 6 0 0 1 0 8.49" />
+            </svg>
+          ),
+        },
+      ];
+
+      const subScores = [
+        {
+          name: "Reach Risk", score: 34, level: "NIEDRIG",
+          insight: "API-Monitoring aktiv · kein Einbruch in 30 Tagen",
+          cta: null,
+        },
+        {
+          name: "Campaign Risk", score: 42, level: "NIEDRIG",
+          insight: "2 aktive Kooperationen · Vertragsrisiken analysiert",
+          cta: null,
+        },
+        {
+          name: "Content Risk", score: 51, level: "MITTEL",
+          insight: "1 Kennzeichnungsrisiko erkannt · AI-Scanner empfiehlt Anpassung",
+          cta: "AI-Scanner Hinweis ansehen →",
+        },
+      ];
+
+      const cardHover = (el, on) => {
+        el.style.transform = on ? "translateY(-2px)" : "none";
+        el.style.boxShadow = on ? "0 12px 40px rgba(20,56,46,0.12)" : "none";
+      };
+
+      return (
+        <section style={{ background: C.cream, padding: "6rem 2rem 0" }}>
+
+          {/* ── PART 1: Feature Explanation ── */}
+          <div ref={headerRef} style={{
+            maxWidth: 896, margin: "0 auto",
+            textAlign: "center", paddingBottom: "4rem",
+            opacity: headerInView ? 1 : 0, transform: headerInView ? "none" : "translateY(24px)",
+            transition: "all 0.7s cubic-bezier(0.22,1,0.36,1)",
+          }}>
+            {/* Eyebrow pill */}
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "0.45rem",
+              border: `1px solid ${C.mint}`, borderRadius: 100,
+              padding: "0.35rem 1rem", marginBottom: "1.75rem",
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: C.mint, flexShrink: 0 }} />
+              <span style={{ fontSize: "0.7rem", fontFamily: "'DM Mono', monospace", color: C.mint, letterSpacing: "0.04em" }}>
+                Risk Intelligence Dashboard · Kostenlos inklusive
+              </span>
+            </div>
+
+            <h2 style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800,
+              fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.04em", lineHeight: 1.1,
+              color: C.forest, marginBottom: "1.25rem",
+            }}>
+              Dein Risikoprofil. Klar. Täglich. Kostenlos.
+            </h2>
+
+            <p style={{
+              fontSize: "1rem", color: C.ink3, lineHeight: 1.75,
+              maxWidth: 600, margin: "0 auto 3rem", fontWeight: 400,
+            }}>
+              Jeder versicherte Creator erhält Zugang zu seinem persönlichen Risk Intelligence Dashboard — powered by denselben KI-Scores, die auch deine Prämie berechnen. Kein Raten. Volle Transparenz.
+            </p>
+
+            {/* Feature 2×2 grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: "1rem", marginBottom: "2.5rem",
+            }}>
+              {features.map((f, i) => (
+                <div key={f.title} style={{
+                  background: C.white, border: `1px solid ${C.rule}`,
+                  borderRadius: 14, padding: "1.25rem 1.25rem 1rem",
+                  textAlign: "left", cursor: "default",
+                  opacity: headerInView ? 1 : 0, transform: headerInView ? "none" : "translateY(16px)",
+                  transition: `all 0.6s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.1}s`,
+                }}
+                onMouseEnter={e => cardHover(e.currentTarget, true)}
+                onMouseLeave={e => cardHover(e.currentTarget, false)}>
+                  <div style={{
+                    width: 38, height: 38, borderRadius: 10,
+                    background: C.mintBg, display: "flex", alignItems: "center", justifyContent: "center",
+                    marginBottom: "0.75rem",
+                  }}>
+                    {f.icon}
+                  </div>
+                  <div style={{ fontSize: "0.85rem", fontWeight: 700, color: C.forest, marginBottom: "0.3rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {f.title}
+                  </div>
+                  <div style={{ fontSize: "0.75rem", color: C.ink3, lineHeight: 1.6 }}>
+                    {f.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Arrow label */}
+            <div style={{ fontSize: "0.8rem", color: C.ink4, fontStyle: "italic", letterSpacing: "0.01em" }}>
+              ↓ So sieht dein Dashboard aus
+            </div>
+          </div>
+
+          {/* ── PART 2: Dashboard Mockup ── */}
+          <div ref={dashRef} style={{
+            maxWidth: 1100, margin: "0 auto",
+            border: `1px solid ${C.rule}`,
+            borderRadius: 18, overflow: "hidden",
+            boxShadow: "0 32px 80px rgba(20,56,46,0.13), 0 4px 16px rgba(0,0,0,0.06)",
+            opacity: dashInView ? 1 : 0, transform: dashInView ? "none" : "translateY(32px)",
+            transition: "all 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s",
+          }}>
+
+            {/* Browser chrome bar */}
+            <div style={{
+              background: C.forest, padding: "0.65rem 1rem",
+              display: "flex", alignItems: "center", gap: "0.75rem",
+            }}>
+              {/* Traffic lights */}
+              <div style={{ display: "flex", gap: "0.35rem", flexShrink: 0 }}>
+                {[DANGER, AMBER, SAFE].map((col, i) => (
+                  <div key={i} style={{ width: 11, height: 11, borderRadius: "50%", background: col, opacity: 0.85 }} />
+                ))}
+              </div>
+              {/* URL bar */}
+              <div style={{
+                flex: 1, display: "flex", justifyContent: "center",
+              }}>
+                <div style={{
+                  background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: 6, padding: "0.25rem 0.85rem",
+                  fontFamily: "'DM Mono', monospace", fontSize: "0.68rem",
+                  color: "rgba(255,255,255,0.55)", letterSpacing: "0.02em",
+                  display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                }}>
+                  <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                    <rect x={3} y={11} width={18} height={11} rx={2} />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  app.shieldcreator.com/dashboard
+                </div>
+              </div>
+              {/* Logo mark */}
+              <div style={{ flexShrink: 0 }}>
+                <svg width={22} height={22} viewBox="0 0 52 52" fill="none">
+                  <path d="M26 6 L10 13 L10 28 C10 38 18 46 26 49 C34 46 42 38 42 28 L42 13 Z" fill="none" stroke={C.mint} strokeWidth={2.5} strokeLinejoin="round" />
+                  <polyline points="19,27 23,31 33,21" stroke={C.mint} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Dashboard inner */}
+            <div style={{ background: "#FAFAF7", padding: "1rem 1rem 0" }}>
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gap: "1rem",
+              }}>
+
+                {/* ── LEFT: Creator Profile Card ── */}
+                <div style={{
+                  background: C.white, borderRadius: 12, overflow: "hidden",
+                  border: `1px solid ${C.rule}`,
+                  opacity: dashInView ? 1 : 0, transform: dashInView ? "none" : "translateY(16px)",
+                  transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s",
+                }}>
+                  <div style={{
+                    background: C.forest, padding: "0.65rem 1rem",
+                    display: "flex", alignItems: "center", gap: "0.5rem",
+                  }}>
+                    <span style={{ fontSize: "0.65rem", fontFamily: "'DM Mono', monospace", color: "rgba(255,255,255,0.9)", letterSpacing: "0.14em", fontWeight: 500, flex: 1 }}>
+                      CREATOR PROFIL
+                    </span>
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: C.mint, animation: "pulse 2s ease-in-out infinite" }} />
+                    <span style={{ fontSize: "0.6rem", color: C.mint, fontFamily: "'DM Mono', monospace", letterSpacing: "0.1em" }}>LIVE</span>
+                  </div>
+                  <div style={{ padding: "1.25rem 1rem" }}>
+                    {/* Avatar */}
+                    <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+                      <div style={{
+                        width: 64, height: 64, borderRadius: "50%",
+                        background: C.forest, color: C.white,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: "1.1rem",
+                        margin: "0 auto 0.6rem",
+                        border: `3px solid ${C.mint}`,
+                        boxShadow: `0 0 0 4px rgba(0,200,117,0.12)`,
+                      }}>NH</div>
+                      <div style={{ fontWeight: 700, color: C.forest, fontSize: "0.95rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Nicolas Huber</div>
+                      <div style={{ fontFamily: "'DM Mono', monospace", color: C.mint, fontSize: "0.78rem", marginTop: "0.15rem" }}>@hubercop</div>
+                      <div style={{
+                        display: "inline-block", marginTop: "0.4rem",
+                        background: C.forest, color: C.white,
+                        fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.06em",
+                        padding: "0.2rem 0.6rem", borderRadius: 100,
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      }}>Instagram</div>
+                    </div>
+
+                    <div style={{ borderTop: `1px solid ${C.rule}`, margin: "0.75rem 0" }} />
+
+                    {/* Stats */}
+                    {[
+                      { label: "Follower",       val: "332'000",        mono: true,  dot: null    },
+                      { label: "Engagement",     val: "4.2%",           mono: true,  dot: null    },
+                      { label: "Aktive Deals",   val: "3",              mono: true,  dot: "amber" },
+                      { label: "Nische",         val: "Health & Fitness",mono: false, dot: null   },
+                      { label: "Tarif",          val: "Pro ★",          mono: false, dot: null,  mint: true },
+                      { label: "Letztes Update", val: "Gerade eben",    mono: false, dot: "mint" },
+                    ].map(row => (
+                      <div key={row.label} style={{
+                        display: "flex", justifyContent: "space-between", alignItems: "center",
+                        padding: "0.3rem 0", fontSize: "0.75rem",
+                        borderBottom: `1px solid ${C.rule}55`,
+                      }}>
+                        <span style={{ color: C.ink3 }}>{row.label}</span>
+                        <span style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                          {row.dot === "amber" && <span style={{ width: 6, height: 6, borderRadius: "50%", background: AMBER, flexShrink: 0 }} />}
+                          {row.dot === "mint"  && <span style={{ width: 6, height: 6, borderRadius: "50%", background: SAFE, animation: "pulse 2s ease-in-out infinite", flexShrink: 0 }} />}
+                          <span style={{
+                            fontFamily: row.mono ? "'DM Mono', monospace" : "'Plus Jakarta Sans', sans-serif",
+                            fontWeight: row.mono ? 500 : 600,
+                            color: row.mint ? C.mint : C.forest,
+                            fontSize: row.mono ? "0.78rem" : "0.72rem",
+                          }}>
+                            {row.val}
+                          </span>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ── CENTER: Overall Risk Score Card ── */}
+                <div style={{
+                  background: C.white, borderRadius: 12, overflow: "hidden",
+                  border: `1px solid ${C.rule}`,
+                  opacity: dashInView ? 1 : 0, transform: dashInView ? "none" : "translateY(16px)",
+                  transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.25s",
+                }}>
+                  <div style={{ background: C.forest, padding: "0.65rem 1rem" }}>
+                    <span style={{ fontSize: "0.65rem", fontFamily: "'DM Mono', monospace", color: "rgba(255,255,255,0.9)", letterSpacing: "0.14em", fontWeight: 500 }}>
+                      OVERALL RISK SCORE
+                    </span>
+                  </div>
+                  <div style={{ padding: "1.5rem 1.25rem" }}>
+                    {/* Giant score */}
+                    <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+                      <div style={{
+                        fontFamily: "'DM Mono', monospace", fontWeight: 500,
+                        fontSize: "5rem", lineHeight: 1, color: SAFE,
+                        letterSpacing: "-0.04em",
+                      }}>
+                        {overallScore}
+                      </div>
+                      <div style={{ fontSize: "0.72rem", color: C.ink4, marginTop: "0.2rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        / 100 · Risiko: <span style={{ color: SAFE, fontWeight: 700 }}>NIEDRIG</span>
+                      </div>
+                    </div>
+
+                    {/* Gauge bar */}
+                    <div style={{ marginBottom: "0.4rem" }}>
+                      <div style={{ position: "relative", height: 10, borderRadius: 100, overflow: "visible" }}>
+                        <div style={{
+                          position: "absolute", inset: 0,
+                          background: `linear-gradient(to right, ${SAFE} 0%, ${AMBER} 50%, ${DANGER} 100%)`,
+                          borderRadius: 100,
+                        }} />
+                        <div style={{
+                          position: "absolute", top: "50%",
+                          left: `${gaugePos}%`,
+                          transform: "translate(-50%, -50%)",
+                          width: 18, height: 18, borderRadius: "50%",
+                          background: C.white,
+                          border: `2.5px solid ${C.forest}`,
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
+                          transition: "left 1.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                          zIndex: 2,
+                        }} />
+                      </div>
+                    </div>
+                    <div style={{
+                      display: "flex", justifyContent: "space-between",
+                      fontSize: "0.6rem", color: C.ink4, fontFamily: "'DM Mono', monospace",
+                      marginBottom: "1.25rem",
+                    }}>
+                      <span>0 · NIEDRIG</span>
+                      <span>MITTEL</span>
+                      <span>HOCH · 100</span>
+                    </div>
+
+                    {/* Pricing callout */}
+                    <div style={{
+                      background: "rgba(0,200,117,0.07)",
+                      borderLeft: `4px solid ${C.mint}`,
+                      borderRadius: "0 8px 8px 0",
+                      padding: "0.85rem 1rem",
+                    }}>
+                      <div style={{
+                        display: "grid", gridTemplateColumns: "1fr 1fr",
+                        gap: "0.6rem 0.5rem",
+                      }}>
+                        {[
+                          { label: "Risiko-Multiplikator", val: "1.085×",        mono: true,  big: false, green: false },
+                          { label: "Tarif",                val: "Pro ★",          mono: false, big: false, green: false },
+                          { label: "Deckung/Claim",        val: "CHF 250K",       mono: true,  big: false, green: false },
+                          { label: "Monatsprämie",         val: "CHF 144.67/Mt.", mono: true,  big: true,  green: true  },
+                        ].map(item => (
+                          <div key={item.label}>
+                            <div style={{ fontSize: "0.58rem", color: C.ink4, marginBottom: "0.1rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                              {item.label}
+                            </div>
+                            <div style={{
+                              fontFamily: item.mono ? "'DM Mono', monospace" : "'Plus Jakarta Sans', sans-serif",
+                              fontWeight: item.big ? 700 : 600,
+                              fontSize: item.big ? "0.92rem" : "0.75rem",
+                              color: item.green ? C.mint : C.forest,
+                            }}>
+                              {item.val}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ── RIGHT: Risk Details Card ── */}
+                <div ref={barsRef} style={{
+                  background: C.white, borderRadius: 12, overflow: "hidden",
+                  border: `1px solid ${C.rule}`,
+                  opacity: dashInView ? 1 : 0, transform: dashInView ? "none" : "translateY(16px)",
+                  transition: "all 0.7s cubic-bezier(0.22,1,0.36,1) 0.35s",
+                }}>
+                  <div style={{ background: C.forest, padding: "0.65rem 1rem" }}>
+                    <span style={{ fontSize: "0.65rem", fontFamily: "'DM Mono', monospace", color: "rgba(255,255,255,0.9)", letterSpacing: "0.14em", fontWeight: 500 }}>
+                      RISIKO-DETAILS
+                    </span>
+                  </div>
+                  <div style={{ padding: "1.25rem 1rem" }}>
+                    {subScores.map((ss, i) => (
+                      <div key={ss.name} style={{
+                        marginBottom: i < subScores.length - 1 ? "1.25rem" : 0,
+                        paddingBottom: i < subScores.length - 1 ? "1.25rem" : 0,
+                        borderBottom: i < subScores.length - 1 ? `1px solid ${C.rule}` : "none",
+                      }}>
+                        {/* Row header */}
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                            <span style={{ fontSize: "0.78rem", fontWeight: 600, color: C.forest, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                              {ss.name}
+                            </span>
+                            <span style={{
+                              background: levelBg(ss.level),
+                              color: levelColor(ss.level),
+                              fontSize: "0.55rem", fontWeight: 700,
+                              padding: "0.15rem 0.45rem", borderRadius: 100,
+                              fontFamily: "'DM Mono', monospace", letterSpacing: "0.08em",
+                            }}>
+                              {ss.level}
+                            </span>
+                          </div>
+                          <span style={{
+                            fontFamily: "'DM Mono', monospace", fontWeight: 500,
+                            fontSize: "1rem", color: scoreColor(ss.score),
+                          }}>
+                            {ss.score}
+                          </span>
+                        </div>
+                        {/* Progress bar */}
+                        <div style={{ height: 6, background: `${C.rule}`, borderRadius: 100, overflow: "hidden", marginBottom: "0.45rem" }}>
+                          <div style={{
+                            height: "100%",
+                            width: barsInView ? `${ss.score}%` : "0%",
+                            background: levelColor(ss.level),
+                            borderRadius: 100,
+                            transition: `width 0.9s cubic-bezier(0.22,1,0.36,1) ${0.15 + i * 0.18}s`,
+                          }} />
+                        </div>
+                        {/* Insight */}
+                        <div style={{ fontSize: "0.68rem", color: C.ink4, fontStyle: "italic", lineHeight: 1.5 }}>
+                          {ss.insight}
+                        </div>
+                        {ss.cta && (
+                          <button onClick={() => {}} style={{
+                            marginTop: "0.3rem",
+                            background: "none", border: "none", padding: 0,
+                            fontSize: "0.68rem", color: C.mint, textDecoration: "underline",
+                            cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                          }}>
+                            {ss.cta}
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* ── Full-width Insight Strip ── */}
+              <div style={{
+                background: C.forest, borderRadius: 12,
+                margin: "1rem 0 1rem",
+                padding: "1rem 1.25rem",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                flexWrap: "wrap", gap: "0.75rem",
+              }}>
+                <div>
+                  <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.9)", fontWeight: 500, fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: "0.2rem" }}>
+                    Dein Score verbessert sich automatisch mit jedem sauberen Monat.
+                  </div>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.75rem", color: C.mint }}>
+                    Aktuelle Einsparung bei Score-Ziel 25: −CHF 12.40/Mt.
+                  </div>
+                </div>
+                <button onClick={onStart} style={{
+                  background: C.mint, color: C.forest,
+                  border: "none", padding: "0.5rem 1.1rem",
+                  borderRadius: 100, fontSize: "0.78rem", fontWeight: 700,
+                  cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  whiteSpace: "nowrap", flexShrink: 0,
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = `0 6px 20px rgba(0,200,117,0.4)`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
+                  Score verbessern →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Bottom CTA Strip ── */}
+          <div style={{
+            background: C.forest,
+            marginTop: 0,
+            padding: "3rem 2rem",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            gap: "2rem", flexWrap: "wrap",
+          }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "1.05rem", color: C.white, fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: "0.3rem" }}>
+                Kostenlos inklusive. Für jeden versicherten Creator.
+              </div>
+              <div style={{ fontSize: "0.85rem", color: C.mint, fontFamily: "'DM Mono', monospace" }}>
+                Dein Dashboard ist aktiv sobald deine Police startet.
+              </div>
+            </div>
+            <button onClick={onStart} style={{
+              background: C.mint, color: C.forest, border: "none",
+              padding: "0.85rem 1.75rem", borderRadius: 100,
+              fontSize: "0.92rem", fontWeight: 700,
+              cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+              boxShadow: "0 4px 24px rgba(0,200,117,0.35)",
+              transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
+              whiteSpace: "nowrap",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,200,117,0.5)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,200,117,0.35)"; }}>
+              Jetzt versichern & Dashboard freischalten
+            </button>
           </div>
         </section>
       );
@@ -709,6 +1272,7 @@
           <LandingStats  />
           <LandingHowItWorks />
           <LandingProducts   onStart={onNext} />
+          <RiskDashboardSection onStart={onNext} />
           <LandingTrust  />
           <LandingFAQ    />
           <LandingFinalCTA   onStart={onNext} />
@@ -758,9 +1322,9 @@
       useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
 
       const platforms = [
-        { key: "instagram", icon: "📸", name: "Instagram", color: "#E1306C" },
-        { key: "youtube",   icon: "▶️",  name: "YouTube",   color: "#FF0000" },
-        { key: "tiktok",    icon: "🎵",  name: "TikTok",    color: "#00F2EA" },
+        { key: "instagram", platform: "instagram", name: "Instagram", color: "#E1306C" },
+        { key: "youtube",   platform: "youtube",   name: "YouTube",   color: "#FF0000" },
+        { key: "tiktok",    platform: "tiktok",    name: "TikTok",    color: "#00F2EA" },
       ];
       const niches = ["Lifestyle & Fashion", "Tech Reviews", "Fitness & Health", "Food & Cooking", "Travel", "Beauty", "Finance", "Gaming", "Music", "Education"];
       const canSubmit = platform && handle && email && followers;
@@ -821,7 +1385,9 @@
                     borderRadius: 12, padding: "0.85rem", textAlign: "center", cursor: "pointer",
                     transition: "border-color 0.2s, background 0.2s",
                   }}>
-                    <div style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>{p.icon}</div>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.25rem" }}>
+                      <PlatformLogo platform={p.platform} size={32} />
+                    </div>
                     <div style={{ fontSize: "0.75rem", fontWeight: 600, color: platform === p.key ? C.ink : C.ink4 }}>{p.name}</div>
                   </div>
                 ))}
@@ -954,8 +1520,6 @@
         { label: "Versicherungspaket konfigurieren",  detail: resultData ? `Risk Score: ${resultData.overall_risk_score}/100` : "Berechne..." },
       ];
 
-      const platformIcon = profileData.platform === "instagram" ? "📸" : profileData.platform === "youtube" ? "▶️" : "🎵";
-
       return (
         <div style={{
           minHeight: "100vh", display: "flex", flexDirection: "column",
@@ -977,8 +1541,8 @@
             display: "flex", alignItems: "center", gap: "1.25rem", minWidth: 340,
           }}>
             <div style={{ width: 48, height: 48, borderRadius: "50%", background: C.forest,
-              display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem", flexShrink: 0 }}>
-              {platformIcon}
+              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <PlatformLogo platform={profileData.platform} size={26} />
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 600, color: C.ink, fontSize: "0.95rem" }}>{profileData.handle}</div>
@@ -1078,6 +1642,17 @@
       const getRiskLabel = (score) => score < 30 ? "Niedrig" : score < 50 ? "Mittel" : "Hoch";
       const rd = data.risk_details || {};
 
+      // ─── DYNAMISCHE PREISBERECHNUNG ───────────────────────────
+      // Gesamtpreis aller 3 Produkte (Basis für Tier-Multiplikator)
+      const totalAllProducts = Object.values(priceMap).reduce((s, p) => s + (p?.monthly || 0), 0);
+      // Multiplikator: wie viel mehr/weniger als die Summe der Einzelprodukte bezahlt man im Tarif
+      const tierMultiplier = totalAllProducts > 0 ? (tierData.monthly / totalAllProducts) : 1;
+      // Summe der aktuell ausgewählten Produkte
+      const selectedTotal = selectedProducts.reduce((s, id) => s + (priceMap[id]?.monthly || 0), 0);
+      // Dynamischer Monatsbeitrag
+      const dynamicMonthly = selectedTotal > 0 ? selectedTotal * tierMultiplier : 0;
+      const dynamicYearly  = dynamicMonthly * 0.85;
+
       const handleContract = async () => {
         setContracting(true);
         const contractData = {
@@ -1091,9 +1666,10 @@
           risk_details:        data.risk_details,
           selected_tier:       tier,
           selected_tier_label: tierData.label,
-          monthly_premium:     tierData.monthly,
-          yearly_premium:      tierData.yearly_total || (tierData.monthly * 12 * 0.85),
-          yearly_monthly:      tierData.yearly_monthly,
+          selected_products:   selectedProducts,
+          monthly_premium:     dynamicMonthly,
+          yearly_premium:      dynamicYearly * 12,
+          yearly_monthly:      dynamicYearly,
           campaign_price:      prices.campaign_protection?.monthly || 0,
           reach_price:         prices.reach_protection?.monthly || 0,
           content_price:       prices.content_liability?.monthly || 0,
@@ -1102,6 +1678,9 @@
           campaign_name:       profileData.campaign_name || null,
           campaign_value:      profileData.campaign_value || 0,
           campaign_premium:    campaignAddon?.premium || localCampaignPremium || 0,
+          coverage_per_claim:  COVERAGE_CAPS[tier]?.perClaim,
+          coverage_annual:     COVERAGE_CAPS[tier]?.annual,
+          coverage_campaign:   COVERAGE_CAPS[tier]?.campaign,
         };
         try {
           const response = await fetch(N8N_CONTRACT_URL, {
@@ -1176,13 +1755,17 @@
 
             {/* Product selection */}
             <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
-              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>
                 Versicherungsprodukte wählen
+              </div>
+              <div style={{ fontSize: "0.72rem", color: C.ink4, marginBottom: "1rem" }}>
+                Wähle die Produkte, die du absichern möchtest — der Preis passt sich automatisch an.
               </div>
               <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                 {INSURANCE_PRODUCTS.map(p => {
                   const selected = selectedProducts.includes(p.id);
                   const price = priceMap[p.id];
+                  const cap = COVERAGE_CAPS[tier];
                   return (
                     <div key={p.id} onClick={() => toggleProduct(p.id)} style={{
                       flex: "1 1 auto", minWidth: 190,
@@ -1207,8 +1790,15 @@
                           fontSize: "0.65rem", color: C.white, transition: "all 0.2s",
                         }}>{selected && "✓"}</div>
                       </div>
-                      <div style={{ marginTop: "0.5rem", fontSize: "0.72rem", color: C.ink3, fontFamily: "'DM Mono', monospace" }}>
-                        CHF {price?.monthly?.toFixed(2) || "—"}/Mt.
+                      <div style={{ marginTop: "0.6rem", fontSize: "0.72rem", color: C.ink3, fontFamily: "'DM Mono', monospace" }}>
+                        CHF {price?.monthly?.toFixed(2) || "—"}/Mt. (Einzelpreis)
+                      </div>
+                      {/* Coverage Cap pro Produkt */}
+                      <div style={{ marginTop: "0.3rem", fontSize: "0.62rem", color: C.ink4, borderTop: `1px solid ${C.rule}`, paddingTop: "0.3rem" }}>
+                        Deckung: {cap?.perClaim || "—"} / Schaden
+                        {p.id === "campaign" && cap && (
+                          <span> · {cap.campaign} / Kampagne</span>
+                        )}
                       </div>
                     </div>
                   );
@@ -1218,33 +1808,50 @@
 
             {/* Tier selection */}
             <div style={{ background: C.white, border: `1px solid ${C.rule}`, borderRadius: 16, padding: "1.5rem", marginBottom: "1.5rem" }}>
-              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: C.ink4, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>
                 Tarif wählen
               </div>
+              <div style={{ fontSize: "0.72rem", color: C.ink4, marginBottom: "1rem" }}>
+                Höherer Tarif = höhere Deckungslimiten und mehr Schutz pro Schadenfall.
+              </div>
               <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                {Object.entries(tiers).map(([key, t]) => (
-                  <div key={key} onClick={() => setTier(key)} style={{
-                    flex: "1 1 auto", minWidth: 155,
-                    background: tier === key ? C.mintBg : "transparent",
-                    border: `1.5px solid ${tier === key ? C.forest : C.rule}`,
-                    borderRadius: 12, padding: "1rem 1.25rem", cursor: "pointer",
-                    position: "relative", transition: "border-color 0.2s, background 0.2s",
-                  }}>
-                    {key === "pro" && (
-                      <div style={{ position: "absolute", top: -8, right: 10,
-                        background: C.forest, color: C.white,
-                        fontSize: "0.5rem", fontWeight: 700, padding: "0.15rem 0.55rem",
-                        borderRadius: 100, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                        Empfohlen
+                {Object.entries(tiers).map(([key, t]) => {
+                  const cap = COVERAGE_CAPS[key];
+                  return (
+                    <div key={key} onClick={() => setTier(key)} style={{
+                      flex: "1 1 auto", minWidth: 155,
+                      background: tier === key ? C.mintBg : "transparent",
+                      border: `1.5px solid ${tier === key ? C.forest : C.rule}`,
+                      borderRadius: 12, padding: "1rem 1.25rem", cursor: "pointer",
+                      position: "relative", transition: "border-color 0.2s, background 0.2s",
+                    }}>
+                      {key === "pro" && (
+                        <div style={{ position: "absolute", top: -8, right: 10,
+                          background: C.forest, color: C.white,
+                          fontSize: "0.5rem", fontWeight: 700, padding: "0.15rem 0.55rem",
+                          borderRadius: 100, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                          Empfohlen
+                        </div>
+                      )}
+                      <div style={{ fontSize: "0.95rem", fontWeight: 700, color: tier === key ? C.forest : C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t.label}</div>
+                      <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace", marginTop: "0.3rem" }}>
+                        {selectedProducts.length > 0
+                          ? `CHF ${(selectedProducts.reduce((s, id) => s + (priceMap[id]?.monthly || 0), 0) * (totalAllProducts > 0 ? t.monthly / totalAllProducts : 1)).toFixed(2)}`
+                          : `CHF ${t.monthly?.toFixed(2)}`}
                       </div>
-                    )}
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: tier === key ? C.forest : C.ink, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{t.label}</div>
-                    <div style={{ fontSize: "1.1rem", fontWeight: 700, color: C.ink, fontFamily: "'DM Mono', monospace", marginTop: "0.3rem" }}>
-                      CHF {t.monthly?.toFixed(2)}
+                      <div style={{ fontSize: "0.62rem", color: C.ink4 }}>pro Monat</div>
+                      {/* Coverage Caps */}
+                      {cap && (
+                        <div style={{ marginTop: "0.6rem", paddingTop: "0.5rem", borderTop: `1px solid ${C.rule}`, fontSize: "0.58rem", color: C.ink4, lineHeight: 1.7 }}>
+                          <div><span style={{ color: C.forest, fontWeight: 600 }}>{cap.perClaim}</span> / Schaden</div>
+                          <div><span style={{ color: C.ink3 }}>{cap.annual}</span> / Jahr</div>
+                          <div><span style={{ color: C.ink3 }}>{cap.campaign}</span> / Kampagne</div>
+                          <div style={{ color: C.mint, fontWeight: 600, marginTop: "0.15rem" }}>Keine Selbstbeteiligung</div>
+                        </div>
+                      )}
                     </div>
-                    <div style={{ fontSize: "0.62rem", color: C.ink4 }}>pro Monat</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -1266,7 +1873,7 @@
                   }
                 </div>
                 <div style={{ fontSize: "0.72rem", color: C.ink4 }}>
-                  {campaignAddon?.coverage_note || "Deckung pro Kampagne gemäss gewähltem Tarif"}
+                  {campaignAddon?.coverage_note || `Kampagnendeckung: ${COVERAGE_CAPS[tier]?.campaign || "—"} · Deckung pro Kampagne gemäss gewähltem Tarif`}
                 </div>
               </div>
             )}
@@ -1280,30 +1887,39 @@
               <div style={{ fontSize: "0.68rem", color: C.ink4, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.5rem" }}>
                 Dein monatlicher Beitrag
               </div>
-              <div style={{ fontSize: "3rem", fontWeight: 800, fontFamily: "'DM Mono', monospace",
-                color: C.forest, letterSpacing: "-0.03em" }}>
-                CHF {tierData.monthly?.toFixed(2) || "—"}
+              {/* Dynamischer Preis */}
+              <div style={{
+                fontSize: "3rem", fontWeight: 800, fontFamily: "'DM Mono', monospace",
+                color: selectedProducts.length === 0 ? C.ink4 : C.forest, letterSpacing: "-0.03em",
+                transition: "all 0.35s cubic-bezier(0.22,1,0.36,1)",
+              }}>
+                {selectedProducts.length === 0 ? "CHF —" : `CHF ${dynamicMonthly.toFixed(2)}`}
               </div>
               <div style={{ fontSize: "0.8rem", color: C.ink3, marginBottom: "0.4rem" }}>
-                pro Monat · {tierData.label} · Bundle-Rabatt inklusive
+                pro Monat · {tierData.label} · {selectedProducts.length} Produkt{selectedProducts.length !== 1 ? "e" : ""} gewählt
               </div>
-              {tierData.yearly_monthly && (
+              {selectedProducts.length > 0 ? (
                 <div style={{ fontSize: "0.72rem", color: C.ink4, marginBottom: "1.75rem" }}>
-                  oder CHF {tierData.yearly_monthly?.toFixed(2)}/Mt. bei Jahreszahlung
+                  oder CHF {dynamicYearly.toFixed(2)}/Mt. bei Jahreszahlung (15% Rabatt)
+                </div>
+              ) : (
+                <div style={{ fontSize: "0.72rem", color: C.amber, marginBottom: "1.75rem" }}>
+                  Bitte mindestens ein Produkt wählen
                 </div>
               )}
               <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-                <button onClick={handleContract} disabled={contracting} style={{
-                  background: contracting ? C.rule : C.forest,
-                  color: C.white, border: "none", padding: "0.85rem 2.5rem",
+                <button onClick={handleContract} disabled={contracting || selectedProducts.length === 0} style={{
+                  background: (contracting || selectedProducts.length === 0) ? C.rule : C.forest,
+                  color: (contracting || selectedProducts.length === 0) ? C.ink4 : C.white,
+                  border: "none", padding: "0.85rem 2.5rem",
                   borderRadius: 12, fontSize: "0.95rem", fontWeight: 600,
-                  cursor: contracting ? "not-allowed" : "pointer",
-                  boxShadow: contracting ? "none" : "0 4px 20px rgba(20,56,46,0.25)",
+                  cursor: (contracting || selectedProducts.length === 0) ? "not-allowed" : "pointer",
+                  boxShadow: (contracting || selectedProducts.length === 0) ? "none" : "0 4px 20px rgba(20,56,46,0.25)",
                   display: "flex", alignItems: "center", gap: "0.5rem",
-                  transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s",
+                  transition: "transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s, background 0.3s",
                 }}
-                onMouseEnter={e => { if (!contracting) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(20,56,46,0.4)"; }}}
-                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = contracting ? "none" : "0 4px 20px rgba(20,56,46,0.25)"; }}>
+                onMouseEnter={e => { if (!contracting && selectedProducts.length > 0) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(20,56,46,0.4)"; }}}
+                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = (contracting || selectedProducts.length === 0) ? "none" : "0 4px 20px rgba(20,56,46,0.25)"; }}>
                   {contracting && <span style={{ animation: "spin 1s linear infinite", display: "inline-block" }}>⟳</span>}
                   {contracting ? "Vertrag wird erstellt..." : "Jetzt abschliessen →"}
                 </button>
@@ -1377,6 +1993,8 @@
                 ["Tarif",          contractData.selected_tier_label, C.forest],
                 ["Handle",         contractData.handle,          C.ink],
                 ["Plattform",      contractData.platform,        C.ink],
+                ["Deckung / Schaden", contractData.coverage_per_claim, C.mint],
+                ["Jahresdeckung",  contractData.coverage_annual,  C.mint],
                 ...(contractData.campaign_name ? [["Kampagne", contractData.campaign_name, C.ink]] : []),
                 ...(contractData.campaign_premium > 0 ? [["Kampagnen-Zuschlag", `CHF ${contractData.campaign_premium.toFixed(2)}`, C.mint]] : []),
               ].map(([label, value, color]) => (
@@ -1400,7 +2018,7 @@
               <div style={{ fontSize: "0.65rem", color: C.ink4, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.75rem" }}>
                 Dein Schutz umfasst
               </div>
-              {INSURANCE_PRODUCTS.map(p => (
+              {INSURANCE_PRODUCTS.filter(p => (contractData.selected_products || ["campaign","reach","content"]).includes(p.id)).map(p => (
                 <div key={p.id} style={{ display: "flex", alignItems: "center", gap: "0.65rem", padding: "0.5rem 0" }}>
                   <span style={{ fontSize: "1.1rem" }}>{p.icon}</span>
                   <span style={{ fontSize: "0.85rem", color: C.ink, flex: 1 }}>{p.name}</span>
@@ -1468,6 +2086,8 @@
       const [hasError, setHasError]   = React.useState(false);
       const messagesEndRef = React.useRef(null);
       const inputRef       = React.useRef(null);
+      // Ref um zu tracken ob der User schon interagiert hat (verhindert doppeltes Auto-Popup)
+      const hasInteractedRef = React.useRef(false);
 
       // Auto-scroll
       React.useEffect(() => {
@@ -1481,6 +2101,22 @@
         if (isOpen && inputRef.current) inputRef.current.focus();
       }, [isOpen]);
 
+      // Auto-open nach 10 Sekunden (einmalig, nur wenn User noch nicht interagiert hat)
+      React.useEffect(() => {
+        const timer = setTimeout(() => {
+          if (!hasInteractedRef.current) {
+            setIsOpen(true);
+          }
+        }, 10000);
+        return () => clearTimeout(timer);
+      }, []);
+
+      // Toggle-Funktion: beim manuellen Schliessen/Öffnen interaktion merken
+      const toggleChat = () => {
+        hasInteractedRef.current = true;
+        setIsOpen(o => !o);
+      };
+
       const sendMessage = async (overrideText) => {
         const trimmed = (overrideText !== undefined ? overrideText : input).trim();
         if (!trimmed || isLoading) return;
@@ -1491,11 +2127,12 @@
         setInput("");
         setIsLoading(true);
         setHasError(false);
+        hasInteractedRef.current = true;
 
         try {
           const history = newMessages
-            .slice(1)   // Skip initial assistant greeting
-            .slice(-10); // Last 10 messages for context window
+            .slice(1)
+            .slice(-10);
 
           const res = await fetch(N8N_CHAT_URL, {
             method: "POST",
@@ -1528,13 +2165,10 @@
         }
       };
 
-      // ── STYLES ────────────────────────────────────────────────────
       const bubbleStyle = (role) => ({
         maxWidth: "82%",
         alignSelf: role === "user" ? "flex-end" : "flex-start",
-        background: role === "user"
-          ? "#14382E"
-          : "#FAFAF7",
+        background: role === "user" ? "#14382E" : "#FAFAF7",
         color: role === "user" ? "#FFFFFF" : "#1A1A1A",
         padding: "0.65rem 0.95rem",
         borderRadius: role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
@@ -1546,14 +2180,25 @@
 
       return (
         React.createElement(React.Fragment, null,
+          /* Pulsierender Ring – sichtbar wenn Chat geschlossen */
+          !isOpen && React.createElement("div", {
+            style: {
+              position: "fixed", bottom: 28, right: 28, zIndex: 9997,
+              width: 56, height: 56, borderRadius: "50%",
+              border: "2px solid rgba(0,200,117,0.6)",
+              animation: "chatRing 2s ease-out infinite",
+              pointerEvents: "none",
+            }
+          }),
+
           /* Floating Button */
           React.createElement("button", {
-            onClick: () => setIsOpen(o => !o),
+            onClick: toggleChat,
             style: {
               position: "fixed", bottom: 28, right: 28, zIndex: 9999,
               width: 56, height: 56, borderRadius: "50%", border: "none",
               background: "#14382E",
-              boxShadow: "0 4px 24px rgba(20,56,46,0.35)",
+              boxShadow: isOpen ? "0 4px 24px rgba(20,56,46,0.35)" : "0 4px 24px rgba(20,56,46,0.35), 0 0 0 4px rgba(0,200,117,0.15)",
               cursor: "pointer", fontSize: "1.4rem",
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s",
@@ -1692,7 +2337,6 @@
                   maxHeight: 100, overflowY: "auto",
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
                   scrollbarWidth: "thin",
-                  "::placeholder": { color: "#A0A0A0" },
                 }
               }),
               React.createElement("button", {
@@ -1700,9 +2344,7 @@
                 disabled: !input.trim() || isLoading,
                 style: {
                   width: 38, height: 38, borderRadius: "50%", border: "none",
-                  background: input.trim() && !isLoading
-                    ? "#14382E"
-                    : "#E5E5E0",
+                  background: input.trim() && !isLoading ? "#14382E" : "#E5E5E0",
                   color: input.trim() && !isLoading ? "#FFFFFF" : "#6B6B6B",
                   cursor: input.trim() && !isLoading ? "pointer" : "not-allowed",
                   display: "flex", alignItems: "center", justifyContent: "center",
@@ -1751,7 +2393,7 @@
                 </span>
               </div>
               <div style={{ fontSize: "0.65rem", color: C.ink4, fontFamily: "'DM Mono', monospace" }}>
-                DEMO · v0.7 · HSG 2026
+                DEMO · v0.8 · HSG 2026
               </div>
             </div>
           )}
