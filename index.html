@@ -174,9 +174,9 @@
     // ─── COVERAGE CAPS (Quelle: Brand Assets) ────────────────
     // Pro Schadenfall / Jahres-Aggregat / Pro Kampagne · Keine Selbstbeteiligung
     const COVERAGE_CAPS = {
-      basic:      { perClaim: "CHF 50'000",    annual: "CHF 100'000",   campaign: "CHF 10'000",  multiplier: 1.00 },
-      pro:        { perClaim: "CHF 250'000",   annual: "CHF 500'000",   campaign: "CHF 50'000",  multiplier: 1.65 },
-      enterprise: { perClaim: "CHF 1'000'000", annual: "CHF 2'000'000", campaign: "CHF 200'000", multiplier: 2.80 },
+      basic:      { perClaim: "CHF 5'000",   annual: "CHF 10'000",  campaign: "CHF 2'000",  multiplier: 1.00 },
+      pro:        { perClaim: "CHF 25'000",  annual: "CHF 50'000",  campaign: "CHF 8'000",  multiplier: 1.65 },
+      enterprise: { perClaim: "CHF 100'000", annual: "CHF 200'000", campaign: "CHF 50'000", multiplier: 2.80 },
     };
 
     // ─── HOOKS ────────────────────────────────────────────────
@@ -589,12 +589,12 @@
       const [headerRef, headerInView] = useInView(0.1);
       const [dashRef,   dashInView]   = useInView(0.05);
       const [barsRef,   barsInView]   = useInView(0.15);
-      const overallScore = useCounter(38, 1200, dashInView);
+      const overallScore = useCounter(44, 1200, dashInView);
       const [gaugePos, setGaugePos] = useState(0);
 
       useEffect(() => {
         if (dashInView) {
-          const t = setTimeout(() => setGaugePos(38), 180);
+          const t = setTimeout(() => setGaugePos(44), 180);
           return () => clearTimeout(t);
         }
       }, [dashInView]);
@@ -669,19 +669,19 @@
 
       const subScores = [
         {
-          name: "Reach Risk", score: 34, level: "NIEDRIG",
+          name: "Reach Risk", score: 41, level: "NIEDRIG",
           insight: "API-Monitoring aktiv · kein Einbruch in 30 Tagen",
           cta: null,
         },
         {
-          name: "Campaign Risk", score: 42, level: "NIEDRIG",
-          insight: "2 aktive Kooperationen · Vertragsrisiken analysiert",
-          cta: null,
-        },
-        {
-          name: "Content Risk", score: 51, level: "MITTEL",
+          name: "Content Risk", score: 52, level: "MITTEL",
           insight: "1 Kennzeichnungsrisiko erkannt · AI-Scanner empfiehlt Anpassung",
           cta: "AI-Scanner Hinweis ansehen →",
+        },
+        {
+          name: "Campaign Risk", score: 39, level: "NIEDRIG",
+          insight: "2 aktive Kooperationen · Vertragsrisiken analysiert",
+          cta: null,
         },
       ];
 
@@ -966,10 +966,9 @@
                         gap: "0.6rem 0.5rem",
                       }}>
                         {[
-                          { label: "Risiko-Multiplikator", val: "1.085×",        mono: true,  big: false, green: false },
-                          { label: "Tarif",                val: "Pro ★",          mono: false, big: false, green: false },
-                          { label: "Deckung/Claim",        val: "CHF 250K",       mono: true,  big: false, green: false },
-                          { label: "Monatsprämie",         val: "CHF 144.67/Mt.", mono: true,  big: true,  green: true  },
+                          { label: "Tarif",        val: "Pro ★",          mono: false, big: false, green: false },
+                          { label: "Deckung/Claim", val: "CHF 25'000",    mono: true,  big: false, green: false },
+                          { label: "Monatsprämie", val: "CHF 163.58/Mt.", mono: true,  big: true,  green: true  },
                         ].map(item => (
                           <div key={item.label}>
                             <div style={{ fontSize: "0.58rem", color: C.ink4, marginBottom: "0.1rem", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
